@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">ImageViewer</string>
+    <string name="app_name">Мои картинки</string>
+    <string name="delete_all">Удалить все</string>
+    <string name="action_search">Поиск</string>
 </resources>
