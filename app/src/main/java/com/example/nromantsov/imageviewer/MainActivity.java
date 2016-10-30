@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,10 +35,13 @@ public class MainActivity extends AppCompatActivity {
         listItem.add("Флаги");
 
         ListView drawerListView = (ListView) findViewById(R.id.left_drawer);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         // подключим адаптер для списка
         drawerListView.setAdapter(new ArrayAdapter<>(this, R.layout.drawer_list_item, R.id.text1, listItem));
         drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+
+        setSupportActionBar(toolbar);
 
         fragmentManager = getSupportFragmentManager();
 
