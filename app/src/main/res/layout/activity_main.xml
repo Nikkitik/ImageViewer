@@ -21,10 +21,11 @@
             android:elevation="10dp"
             android:layout_below="@+id/toolbar"
             android:id="@+id/tabs"
-            app:tabTextColor="#FFF"
+            app:tabSelectedTextColor="@color/colorText"
+            app:tabTextColor="@color/colorAccent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabIndicatorColor="#FFF"
+            app:tabIndicatorColor="@color/colorAccent"
             android:background="@color/colorPrimary"
             android:padding="2dp"
             tools:targetApi="lollipop" />
