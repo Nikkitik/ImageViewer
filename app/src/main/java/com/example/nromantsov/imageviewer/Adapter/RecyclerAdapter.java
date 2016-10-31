@@ -44,14 +44,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
 
-        Resources r = v.getResources();
-        int px = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 14, r.getDisplayMetrics());
-
         if (v.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            v.getLayoutParams().height = (screenHeight - px * 6) / 3;
+            v.getLayoutParams().height = screenHeight / 4;
             v.getLayoutParams().width = screenWidth / 2;
         } else {
-            v.getLayoutParams().height = (screenHeight - px * 5) / 2;
+            v.getLayoutParams().height = screenHeight / 2;
             v.getLayoutParams().width = screenWidth / 3;
         }
 
