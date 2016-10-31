@@ -15,11 +15,9 @@
 .idea/runConfigurations.xml
 app/libs/
 app/proguard-rules.pro
-app/src/main/res/drawable/
 gradle.properties
 gradle/
 gradlew
 gradlew.bat
 libs/
 proguard-rules.pro
-src/main/res/drawable/
