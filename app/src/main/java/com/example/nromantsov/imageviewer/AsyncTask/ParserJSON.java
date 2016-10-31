@@ -70,7 +70,7 @@ public class ParserJSON extends AsyncTask<String, Integer, Void> {
                 serverName = id.getString("server");
                 secretName = id.getString("secret");
 
-                String source = "https://farm6.staticflickr.com/" + serverName + "/" + idName + "_" + secretName + ".jpg";
+                String source = "https://farm6.staticflickr.com/" + serverName + "/" + idName + "_" + secretName + "_b.jpg";
                 sourceArray.add(source);
             }
         } catch (Exception e) {
