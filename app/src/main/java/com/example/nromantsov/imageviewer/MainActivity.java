@@ -97,10 +97,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 tagEng = "robots";
                 break;
             case R.id.flights:
-                tagEng = "flags";
+                tagEng = "aircraft";
                 break;
             case R.id.trains:
-                tagEng = "flags";
+                tagEng = "trains";
                 break;
         }
 
