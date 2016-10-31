@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/cars"
+            android:icon="@drawable/cars"
+            android:title="Машины" />
+        <item
+            android:id="@+id/robots"
+            android:icon="@drawable/robots"
+            android:title="Роботы" />
+        <item
+            android:id="@+id/flights"
+            android:icon="@drawable/flights"
+            android:title="Самолеты" />
+        <item
+            android:id="@+id/trains"
+            android:icon="@drawable/trains"
+            android:title="Поезда" />
+    </group>
+
+    <item android:title="Избранное">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:title="Что-то будет" />
+            <item
+                android:id="@+id/nav_send"
+                android:title="И тут тоже" />
+        </menu>
+    </item>
+
+</menu>
