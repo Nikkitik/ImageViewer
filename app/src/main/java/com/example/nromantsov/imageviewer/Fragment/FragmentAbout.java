@@ -2,6 +2,8 @@ package com.example.nromantsov.imageviewer.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,8 @@ import com.example.nromantsov.imageviewer.AsyncTask.DownLoadImage;
 import com.example.nromantsov.imageviewer.R;
 
 public class FragmentAbout extends Fragment {
+
+    Snackbar snackbar;
 
     @Nullable
     @Override
@@ -24,6 +28,15 @@ public class FragmentAbout extends Fragment {
             imageView.setTag(bundle.getString("tag"));
             new DownLoadImage(imageView).execute(bundle.getString("tag"));
         }
+
+        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                snackbar = Snackbar.make(view, "Картинка добавлена в избранное :)", Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        });
 
         return v;
     }
