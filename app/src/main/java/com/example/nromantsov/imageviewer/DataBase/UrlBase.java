@@ -1,8 +1,6 @@
 package com.example.nromantsov.imageviewer.DataBase;
 
 public class UrlBase {
-
-    int id;
     String tag;
     String url;
 
@@ -12,20 +10,6 @@ public class UrlBase {
     public UrlBase(String tag, String url) {
         this.tag = tag;
         this.url = url;
-    }
-
-    public UrlBase(int id, String tag, String url) {
-        this.id = id;
-        this.tag = tag;
-        this.url = url;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getTag() {
