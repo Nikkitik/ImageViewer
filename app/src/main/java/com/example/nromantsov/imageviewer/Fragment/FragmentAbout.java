@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.AsyncTask.DownLoadImage;
-import com.example.nromantsov.imageviewer.DataBase.DbHandler123;
+import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.DataBase.UrlBase;
 import com.example.nromantsov.imageviewer.R;
 
@@ -41,7 +41,7 @@ public class FragmentAbout extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DbHandler123 dbHandler = new DbHandler123(getActivity());
+                DbHandler dbHandler = new DbHandler(getActivity());
                 List<String> urlBase = dbHandler.getUrls();
 
                 for (int i = 0; i < urlBase.size(); i++) {
