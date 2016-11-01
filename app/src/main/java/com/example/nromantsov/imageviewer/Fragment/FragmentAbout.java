@@ -11,11 +11,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.AsyncTask.DownLoadImage;
+import com.example.nromantsov.imageviewer.DataBase.DbHandler;
+import com.example.nromantsov.imageviewer.DataBase.UrlBase;
 import com.example.nromantsov.imageviewer.R;
 
 public class FragmentAbout extends Fragment {
 
     Snackbar snackbar;
+    String url, tag;
 
     @Nullable
     @Override
@@ -25,8 +28,10 @@ public class FragmentAbout extends Fragment {
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            imageView.setTag(bundle.getString("tag"));
-            new DownLoadImage(imageView).execute(bundle.getString("tag"));
+            url = bundle.getString("url");
+            tag = bundle.getString("tag");
+            imageView.setTag(url);
+            new DownLoadImage(imageView).execute(url);
         }
 
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
@@ -35,6 +40,10 @@ public class FragmentAbout extends Fragment {
             public void onClick(View view) {
                 snackbar = Snackbar.make(view, "Картинка добавлена в избранное :)", Snackbar.LENGTH_LONG);
                 snackbar.show();
+
+                DbHandler dbHandler = new DbHandler(getActivity());
+
+                dbHandler.addUrl(new UrlBase(tag, url));
             }
         });
 
