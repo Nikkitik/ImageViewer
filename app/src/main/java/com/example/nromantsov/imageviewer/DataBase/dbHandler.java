@@ -55,7 +55,6 @@ public class DbHandler extends SQLiteOpenHelper {
             urlsList.add(cursor.getString(1));
         }
         cursor.close();
-
         return urlsList;
     }
 
