@@ -24,12 +24,17 @@ public class FragmentFavorite extends Fragment {
 
     RecyclerAdapter adapter = null;
     List<String> urlBase = new ArrayList<>();
-    String tag = null;
+    String tag;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_favorite, container, false);
+
+        Bundle bundle = getArguments();
+
+        if (bundle != null)
+            tag = getArguments().getString("tag", "weather");
 
         DbHandler dbHandler = new DbHandler(getActivity());
         urlBase = dbHandler.getUrls(tag);
