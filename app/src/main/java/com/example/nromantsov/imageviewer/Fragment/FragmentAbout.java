@@ -15,8 +15,6 @@ import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.DataBase.UrlBase;
 import com.example.nromantsov.imageviewer.R;
 
-import java.util.List;
-
 public class FragmentAbout extends Fragment {
 
     Snackbar snackbar;
@@ -42,13 +40,6 @@ public class FragmentAbout extends Fragment {
             @Override
             public void onClick(View view) {
                 DbHandler dbHandler = new DbHandler(getActivity());
-                List<String> urlBase = dbHandler.getUrls();
-
-                for (int i = 0; i < urlBase.size(); i++) {
-                    if (url.equals(urlBase.get(i))) {
-                        nameUrl = true;
-                    }
-                }
 
                 if (nameUrl) {
                     snackbar = Snackbar.make(view, "Картинка уже добавлена в избранное :)", Snackbar.LENGTH_LONG);
