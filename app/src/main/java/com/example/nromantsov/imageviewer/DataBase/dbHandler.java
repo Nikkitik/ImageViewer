@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class dbHandler extends SQLiteOpenHelper {
+public class DbHandler extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "URL_DB";
@@ -17,7 +17,7 @@ public class dbHandler extends SQLiteOpenHelper {
     private static final String KEY_TAG = "tag";
     private static final String KEY_URL = "url";
 
-    public dbHandler(Context context) {
+    public DbHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
