@@ -1,6 +1,8 @@
 package com.example.nromantsov.imageviewer;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.example.nromantsov.imageviewer.Fragment.FragmentPagerAdapter;
 
 import java.io.File;
