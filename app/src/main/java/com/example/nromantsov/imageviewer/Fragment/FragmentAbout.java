@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.AsyncTask.DownLoadImage;
-import com.example.nromantsov.imageviewer.DataBase.dbHandler;
+import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.DataBase.UrlBase;
 import com.example.nromantsov.imageviewer.R;
 
@@ -41,7 +41,7 @@ public class FragmentAbout extends Fragment {
                 snackbar = Snackbar.make(view, "Картинка добавлена в избранное :)", Snackbar.LENGTH_LONG);
                 snackbar.show();
 
-                dbHandler dbHandler = new dbHandler(getActivity());
+                DbHandler dbHandler = new DbHandler(getActivity());
 
                 dbHandler.addUrl(new UrlBase(tag, url));
             }
