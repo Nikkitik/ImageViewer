@@ -28,7 +28,7 @@ public class MainFragment extends Fragment implements ISourceArray {
     RecyclerAdapter adapter = null;
     ProgressBar progressBar;
     int page = 1;
-    String tag = "weather";
+    String tag;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainFragment extends Fragment implements ISourceArray {
         Bundle bundle = getArguments();
 
         if (bundle != null)
-            tag = getArguments().getString("tag");
+            tag = getArguments().getString("tag", "weather");
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -80,7 +80,8 @@ public class MainFragment extends Fragment implements ISourceArray {
                 FragmentAbout fragmentAbout = new FragmentAbout();
                 Bundle bundle = new Bundle();
 
-                bundle.putString("tag", sourceList.get(position));
+                bundle.putString("url", sourceList.get(position));
+                bundle.putString("tag", tag);
 
                 fragmentAbout.setArguments(bundle);
                 FragmentManager fragmentManager = getFragmentManager();
