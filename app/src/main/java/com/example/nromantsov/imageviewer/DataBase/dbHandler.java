@@ -46,6 +46,19 @@ public class DbHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public List<String> getUrls() {
+        List<String> urlsList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_URLS, null);
+
+        while (cursor.moveToNext()) {
+            urlsList.add(cursor.getString(1));
+        }
+        cursor.close();
+
+        return urlsList;
+    }
+
     public List<UrlBase> getTagUrls() {
         List<UrlBase> urlsList = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -54,9 +67,8 @@ public class DbHandler extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             UrlBase urlBase = new UrlBase();
 
-            urlBase.setId(cursor.getInt(0));
-            urlBase.setTag(cursor.getString(1));
-            urlBase.setUrl(cursor.getString(2));
+            urlBase.setTag(cursor.getString(0));
+            urlBase.setUrl(cursor.getString(1));
 
             urlsList.add(urlBase);
         }
