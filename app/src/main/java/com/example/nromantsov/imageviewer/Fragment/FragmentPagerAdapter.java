@@ -43,7 +43,7 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
                 title = "Фото";
                 break;
             case 1:
-                title = "Подробно";
+                title = "Избранное";
                 break;
         }
         return title;
