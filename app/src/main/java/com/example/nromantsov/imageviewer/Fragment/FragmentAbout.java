@@ -15,10 +15,13 @@ import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.DataBase.UrlBase;
 import com.example.nromantsov.imageviewer.R;
 
+import java.util.List;
+
 public class FragmentAbout extends Fragment {
 
     Snackbar snackbar;
     String url, tag;
+    Boolean nameUrl = false;
 
     @Nullable
     @Override
@@ -38,12 +41,24 @@ public class FragmentAbout extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                snackbar = Snackbar.make(view, "Картинка добавлена в избранное :)", Snackbar.LENGTH_LONG);
-                snackbar.show();
-
                 DbHandler dbHandler = new DbHandler(getActivity());
+                List<String> urlBase = dbHandler.getUrls();
 
-                dbHandler.addUrl(new UrlBase(tag, url));
+                for (int i = 0; i < urlBase.size(); i++) {
+                    if (url.equals(urlBase.get(i))) {
+                        nameUrl = true;
+                    }
+                }
+
+                if (nameUrl) {
+                    snackbar = Snackbar.make(view, "Картинка уже добавлена в избранное :)", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                } else {
+                    snackbar = Snackbar.make(view, "Картинка добавлена в избранное :)", Snackbar.LENGTH_LONG);
+                    snackbar.show();
+                    dbHandler.addUrl(new UrlBase(tag, url));
+                }
+
             }
         });
 
