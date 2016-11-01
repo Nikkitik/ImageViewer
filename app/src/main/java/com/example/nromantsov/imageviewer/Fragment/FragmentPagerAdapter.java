@@ -24,7 +24,11 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
                 mainFragment.setArguments(bundle);
                 return mainFragment;
             case 1:
-                return new FragmentFavorite();
+                FragmentFavorite fragmentFavorite = new FragmentFavorite();
+                Bundle bundlefav = new Bundle();
+                bundlefav.putString("tag", tag);
+                fragmentFavorite.setArguments(bundlefav);
+                return fragmentFavorite;
             default:
                 return null;
         }
