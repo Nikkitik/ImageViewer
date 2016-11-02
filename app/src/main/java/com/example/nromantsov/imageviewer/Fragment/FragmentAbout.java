@@ -22,8 +22,9 @@ public class FragmentAbout extends Fragment {
     Snackbar snackbar;
     String url, tag;
     Boolean nameUrl = false;
-    Boolean addCancel = true;
+
     DbHandler dbHandler;
+    FloatingActionButton fab;
 
     @Nullable
     @Override
@@ -39,7 +40,7 @@ public class FragmentAbout extends Fragment {
             new DownLoadImage(imageView).execute(url);
         }
 
-        final FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        fab = (FloatingActionButton) v.findViewById(R.id.fab);
 
         dbHandler = new DbHandler(getActivity());
         List<String> urlList = dbHandler.getUrls(tag);
@@ -63,35 +64,39 @@ public class FragmentAbout extends Fragment {
                             .setAction("Отмена", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    dbHandler.addUrl(new UrlBase(tag, url));
-                                    nameUrl = true;
-                                    fab.setImageResource(R.drawable.star_black);
+                                    addURLDataBase();
                                 }
                             });
                     snackbar.show();
 
-                    dbHandler.deleteUrlFavorite(url);
-                    nameUrl = false;
-                    fab.setImageResource(R.drawable.star_white);
+                    deleteURLDataBase();
                 } else {
                     snackbar = Snackbar.make(view, "Добавлено в избранное :)", Snackbar.LENGTH_LONG)
                             .setAction("Отмена", new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    dbHandler.deleteUrlFavorite(url);
-                                    nameUrl = false;
-                                    fab.setImageResource(R.drawable.star_white);
+                                    deleteURLDataBase();
                                 }
                             });
                     snackbar.show();
 
-                    dbHandler.addUrl(new UrlBase(tag, url));
-                    nameUrl = true;
-                    fab.setImageResource(R.drawable.star_black);
+                    addURLDataBase();
                 }
             }
         });
         return v;
+    }
+
+    public void addURLDataBase() {
+        dbHandler.addUrl(new UrlBase(tag, url));
+        nameUrl = true;
+        fab.setImageResource(R.drawable.star_black);
+    }
+
+    public void deleteURLDataBase() {
+        dbHandler.deleteUrlFavorite(url);
+        nameUrl = false;
+        fab.setImageResource(R.drawable.star_white);
     }
 }
 
