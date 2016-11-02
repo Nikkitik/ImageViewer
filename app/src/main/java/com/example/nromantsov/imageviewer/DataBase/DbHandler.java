@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.nromantsov.imageviewer.ApplicationBase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class DbHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUrl (UrlBase urlBase) {
+    public void addUrl(UrlBase urlBase) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -44,6 +46,8 @@ public class DbHandler extends SQLiteOpenHelper {
 
         db.insert(TABLE_URLS, null, cv);
         db.close();
+
+        ApplicationBase.obs.getObserverChange().setUrl(urlBase.getUrl());
     }
 
     public List<String> getUrls(String tag) {
@@ -56,5 +60,12 @@ public class DbHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return urlsList;
+    }
+
+    public void deleteUrls(String tag) {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(TABLE_URLS, "tag = '" + tag + "'", null);
+
+        ApplicationBase.obs.getObserverChange().setUrl("delete");
     }
 }
