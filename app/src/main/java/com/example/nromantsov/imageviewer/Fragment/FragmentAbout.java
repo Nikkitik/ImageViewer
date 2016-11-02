@@ -22,6 +22,8 @@ public class FragmentAbout extends Fragment {
     Snackbar snackbar;
     String url, tag;
     Boolean nameUrl = false;
+    Boolean addCancel = true;
+    DbHandler dbHandler;
 
     @Nullable
     @Override
@@ -37,31 +39,59 @@ public class FragmentAbout extends Fragment {
             new DownLoadImage(imageView).execute(url);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.fab);
+
+        dbHandler = new DbHandler(getActivity());
+        List<String> urlList = dbHandler.getUrls(tag);
+
+
+        for (int i = 0; i < urlList.size(); i++) {
+            if (url.equals(urlList.get(i)))
+                nameUrl = true;
+        }
+
+        if (nameUrl)
+            fab.setImageResource(R.drawable.star_black);
+        else
+            fab.setImageResource(R.drawable.star_white);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DbHandler dbHandler = new DbHandler(getActivity());
-                List<String> urlList = dbHandler.getUrls(tag);
-
-
-                for (int i = 0; i < urlList.size(); i++) {
-                    if (url.equals(urlList.get(i)))
-                        nameUrl = true;
-                }
-
                 if (nameUrl) {
-                    snackbar = Snackbar.make(view, "Картинка уже добавлена в избранное :)", Snackbar.LENGTH_LONG);
+                    snackbar = Snackbar.make(view, "Удалено из избранного :)", Snackbar.LENGTH_LONG)
+                            .setAction("Отмена", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dbHandler.addUrl(new UrlBase(tag, url));
+                                    nameUrl = true;
+                                    fab.setImageResource(R.drawable.star_black);
+                                }
+                            });
                     snackbar.show();
-                } else {
-                    snackbar = Snackbar.make(view, "Картинка добавлена в избранное :)", Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    dbHandler.addUrl(new UrlBase(tag, url));
-                }
 
+                    dbHandler.deleteUrlFavorite(url);
+                    nameUrl = false;
+                    fab.setImageResource(R.drawable.star_white);
+                } else {
+                    snackbar = Snackbar.make(view, "Добавлено в избранное :)", Snackbar.LENGTH_LONG)
+                            .setAction("Отмена", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    dbHandler.deleteUrlFavorite(url);
+                                    nameUrl = false;
+                                    fab.setImageResource(R.drawable.star_white);
+                                }
+                            });
+                    snackbar.show();
+
+                    dbHandler.addUrl(new UrlBase(tag, url));
+                    nameUrl = true;
+                    fab.setImageResource(R.drawable.star_black);
+                }
             }
         });
-
         return v;
     }
 }
+
