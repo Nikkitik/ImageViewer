@@ -79,6 +79,7 @@ public class FragmentFavorite extends Fragment implements Observer {
                 Bundle bundle = new Bundle();
 
                 bundle.putString("url", urlBase.get(position));
+                bundle.putString("tag", tag);
 
                 fragmentAbout.setArguments(bundle);
                 FragmentManager fragmentManager = getFragmentManager();
