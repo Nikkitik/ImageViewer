@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends Fragment implements ISourceArray {
-
     List<String> sourceList = new ArrayList<>();
     RecyclerAdapter adapter = null;
     ProgressBar progressBar;
