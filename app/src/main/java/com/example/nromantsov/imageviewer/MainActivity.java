@@ -1,8 +1,6 @@
 package com.example.nromantsov.imageviewer;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.provider.ContactsContract;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -14,7 +12,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.Fragment.FragmentPagerAdapter;
 
 import java.io.File;
@@ -22,7 +22,7 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     FragmentManager fragmentManager;
     ViewPager viewPager;
-    String tagEng = null;
+    String tagEng = "weather";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,10 +61,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        File pictureDirectory = new File("data/data/com.example.nromantsov.imageviewer/");
+        int id = item.getItemId();
 
-        for (File f : pictureDirectory.listFiles()) {
-            f.delete();
+        switch (id) {
+            case R.id.action_delete:
+                int viewPage = viewPager.getCurrentItem();
+                switch (viewPage) {
+                    case 0:
+                        File pictureDirectory = new File("data/data/com.example.nromantsov.imageviewer/");
+
+                        for (File f : pictureDirectory.listFiles()) {
+                            f.delete();
+                        }
+
+                        Toast.makeText(this, "Folder is empty", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        DbHandler dbHandler = new DbHandler(this);
+                        dbHandler.deleteUrls(tagEng);
+                        Toast.makeText(this, "Delete Base", Toast.LENGTH_SHORT).show();
+                        break;
+                }
         }
         return super.onOptionsItemSelected(item);
     }
