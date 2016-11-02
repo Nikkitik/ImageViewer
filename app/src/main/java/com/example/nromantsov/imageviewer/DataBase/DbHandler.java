@@ -62,6 +62,13 @@ public class DbHandler extends SQLiteOpenHelper {
         return urlsList;
     }
 
+    public void deleteUrlFavorite(String url) {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(TABLE_URLS, "url = '" + url + "'", null);
+
+        ApplicationBase.obs.getObserverChange().setUrl("delete");
+    }
+
     public void deleteUrls(String tag) {
         SQLiteDatabase db = getReadableDatabase();
         db.delete(TABLE_URLS, "tag = '" + tag + "'", null);
