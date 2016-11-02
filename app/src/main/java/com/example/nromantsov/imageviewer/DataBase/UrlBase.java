@@ -4,9 +4,6 @@ public class UrlBase {
     String tag;
     String url;
 
-    public UrlBase() {
-    }
-
     public UrlBase(String tag, String url) {
         this.tag = tag;
         this.url = url;
