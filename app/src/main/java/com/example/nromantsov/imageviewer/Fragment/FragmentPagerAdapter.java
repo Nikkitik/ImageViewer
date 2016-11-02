@@ -5,9 +5,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.nromantsov.imageviewer.ApplicationBase;
+import com.example.nromantsov.imageviewer.MainActivity;
+
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
-    String tag;
+    private String tag;
 
     public FragmentPagerAdapter(FragmentManager fm, String tag) {
         super(fm);
