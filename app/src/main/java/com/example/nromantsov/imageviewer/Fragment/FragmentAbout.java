@@ -5,7 +5,12 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +18,7 @@ import android.widget.ImageView;
 import com.example.nromantsov.imageviewer.AsyncTask.DownLoadImage;
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.DataBase.UrlBase;
+import com.example.nromantsov.imageviewer.MainActivity;
 import com.example.nromantsov.imageviewer.R;
 
 import java.util.List;
@@ -31,6 +37,10 @@ public class FragmentAbout extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_about, container, false);
         ImageView imageView = (ImageView) v.findViewById(R.id.imgAbout);
+        setHasOptionsMenu(true);
+
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Подробно");
+        ((MainActivity)getActivity()).setDrawerIndicatorEnabled(false);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -87,6 +97,11 @@ public class FragmentAbout extends Fragment {
         return v;
     }
 
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.findItem(R.id.action_delete).setVisible(false);
+        menu.findItem(R.id.action_search).setVisible(false);
+    }
+
     public void addURLDataBase() {
         dbHandler.addUrl(new UrlBase(tag, url));
         nameUrl = true;
@@ -97,6 +112,20 @@ public class FragmentAbout extends Fragment {
         dbHandler.deleteUrlFavorite(url);
         nameUrl = false;
         fab.setImageResource(R.drawable.star_white);
+    }
+
+    @Override
+    public void onDestroy() {
+        ((MainActivity) getActivity()).setDrawerIndicatorEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Мои картинки");
+        super.onDestroy();
+    }
+
+    private static final String TAG = "FragmentAbout";
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.d(TAG, "onOptionsItemSelected: ");
+        return super.onOptionsItemSelected(item);
     }
 }
 
