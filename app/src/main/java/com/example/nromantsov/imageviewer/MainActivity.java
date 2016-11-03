@@ -2,6 +2,7 @@ package com.example.nromantsov.imageviewer;
 
 //https://github.com/KKorvin/TinyStockQuotes
 
+
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
+import com.example.nromantsov.imageviewer.Fragment.DialogFragment;
 import com.example.nromantsov.imageviewer.Fragment.FragmentPagerAdapter;
 
 import java.io.File;
@@ -81,12 +83,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == android.R.id.home) {
-            if (!toggle.onOptionsItemSelected(item)) onBackPressed();
-            return true;
-        }
+//        if (id == android.R.id.home) {
+//            if (!toggle.onOptionsItemSelected(item)) onBackPressed();
+//            return true;
+//        }
 
         switch (id) {
+            case android.R.id.home:
+                if (!toggle.onOptionsItemSelected(item)) onBackPressed();
+                break;
             case R.id.action_delete:
                 int viewPage = viewPager.getCurrentItem();
                 switch (viewPage) {
@@ -105,6 +110,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Toast.makeText(this, "Delete Base", Toast.LENGTH_SHORT).show();
                         break;
                 }
+                break;
+            case R.id.action_search:
+                new DialogFragment().show(getSupportFragmentManager(), "search");
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
