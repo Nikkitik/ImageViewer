@@ -83,7 +83,7 @@ public class FragmentFavorite extends Fragment implements Observer {
 
                 fragmentAbout.setArguments(bundle);
                 FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.drawer_layout, fragmentAbout)
+                fragmentManager.beginTransaction().add(R.id.fl, fragmentAbout)
                         .addToBackStack(null)
                         .commit();
             }
