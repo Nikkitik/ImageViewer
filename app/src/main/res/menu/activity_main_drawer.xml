@@ -9,7 +9,7 @@
         <item
             android:id="@+id/robots"
             android:icon="@drawable/robots"
-            android:title="Роботы" />
+            android:title="Роботы"/>
         <item
             android:id="@+id/flights"
             android:icon="@drawable/flights"
@@ -23,11 +23,9 @@
     <item android:title="Избранное">
         <menu>
             <item
-                android:id="@+id/nav_share"
-                android:title="Что-то будет" />
-            <item
-                android:id="@+id/nav_send"
-                android:title="И тут тоже" />
+                android:id="@+id/all_favorite"
+                android:title="Отобразить избранное"
+                android:icon="@drawable/star_white"/>
         </menu>
     </item>
 
