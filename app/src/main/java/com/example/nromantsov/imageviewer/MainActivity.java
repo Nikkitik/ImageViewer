@@ -138,8 +138,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 tagEng = "car";
                 break;
             case R.id.robots:
-                if (fragmentManager.findFragmentByTag("about") != null)
-                    fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("about")).commit();
+                removeAbout();
                 tagEng = "robots";
                 break;
             case R.id.flights:
