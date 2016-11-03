@@ -1,5 +1,9 @@
 package com.example.nromantsov.imageviewer;
 
+//https://github.com/KKorvin/TinyStockQuotes
+
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -23,6 +27,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fragmentManager;
     ViewPager viewPager;
     String tagEng = "weather";
+    ActionBarDrawerToggle toggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +37,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        toggle = new ActionBarDrawerToggle(this, drawer,
+                R.string.navigation_drawer_open,
+                R.string.navigation_drawer_close);
+
         toggle.syncState();
+        drawer.setDrawerListener(toggle);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setItemTextColor(ColorStateList.valueOf(Color.BLACK));
 
         fragmentManager = getSupportFragmentManager();
 
@@ -51,6 +64,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tagEng));
         tabs.setupWithViewPager(viewPager);
+        setDrawerIndicatorEnabled(true);
+    }
+
+    public void setDrawerIndicatorEnabled(boolean set) {
+        this.toggle.setDrawerIndicatorEnabled(set);
     }
 
     @Override
@@ -62,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            if (!toggle.onOptionsItemSelected(item)) onBackPressed();
+            return true;
+        }
 
         switch (id) {
             case R.id.action_delete:
@@ -97,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     viewPager.setCurrentItem(0);
                 else
                     super.onBackPressed();
-            }else {
+            } else {
                 super.onBackPressed();
             }
         }
@@ -111,15 +134,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.cars:
+                removeAbout();
                 tagEng = "car";
                 break;
             case R.id.robots:
+                if (fragmentManager.findFragmentByTag("about") != null)
+                    fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("about")).commit();
                 tagEng = "robots";
                 break;
             case R.id.flights:
+                removeAbout();
                 tagEng = "aircraft";
                 break;
             case R.id.trains:
+                removeAbout();
                 tagEng = "trains";
                 break;
         }
@@ -128,5 +156,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tagEng));
         return true;
+    }
+
+    public void removeAbout() {
+        if (fragmentManager.findFragmentByTag("about") != null) {
+            fragmentManager.findFragmentByTag("about").onDestroy();
+            fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("about")).commit();
+        }
     }
 }
