@@ -20,12 +20,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
-import com.example.nromantsov.imageviewer.Fragment.DialogFragment;
+import com.example.nromantsov.imageviewer.Fragment.DialogFragmentSearch;
 import com.example.nromantsov.imageviewer.Fragment.FragmentPagerAdapter;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DialogFragmentSearch.OnTagDialog {
     FragmentManager fragmentManager;
     ViewPager viewPager;
     String tagEng = "weather";
@@ -83,11 +83,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-//        if (id == android.R.id.home) {
-//            if (!toggle.onOptionsItemSelected(item)) onBackPressed();
-//            return true;
-//        }
-
         switch (id) {
             case android.R.id.home:
                 if (!toggle.onOptionsItemSelected(item)) onBackPressed();
@@ -112,7 +107,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case R.id.action_search:
-                new DialogFragment().show(getSupportFragmentManager(), "search");
+                DialogFragmentSearch dialogFragmentSearch = new DialogFragmentSearch();
+                dialogFragmentSearch.show(getSupportFragmentManager(), "search");
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -171,5 +167,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             fragmentManager.findFragmentByTag("about").onDestroy();
             fragmentManager.beginTransaction().remove(fragmentManager.findFragmentByTag("about")).commit();
         }
+    }
+
+    @Override
+    public void onTag(String tag) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tag));
     }
 }
