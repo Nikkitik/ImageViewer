@@ -33,7 +33,7 @@ public class ParserJSON extends AsyncTask<String, Integer, Boolean> {
     @Override
     protected Boolean doInBackground(String... params) {
         try {
-            URL url = new URL("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=4fe038fa52c229b33d82da3283567c6c&tags=" + iPresenter.getTag() + "&license=&page=1&format=json&nojsoncallback=1");
+            URL url = new URL("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=4fe038fa52c229b33d82da3283567c6c&tags=" + iPresenter.getTag() + "&license=&page=" + iPresenter.getPage() + "&format=json&nojsoncallback=1");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
