@@ -13,6 +13,7 @@ public class UrlListPresenter implements IPresenter {
 
     private List<String> urls = new ArrayList<>();
     private String tag;
+    private int page;
 
     public UrlListPresenter(IView iView) {
         this.iView = iView;
@@ -43,5 +44,17 @@ public class UrlListPresenter implements IPresenter {
 
     public String getTag() {
         return tag;
+    }
+
+    @Override
+    public void setPage(int page) {
+        if (page == 0)
+            page = 1;
+        this.page = page;
+    }
+
+    @Override
+    public Integer getPage() {
+        return page;
     }
 }
