@@ -1,6 +1,5 @@
 package com.example.nromantsov.imageviewer.Fragment;
 
-import android.app.Application;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +11,11 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.nromantsov.imageviewer.Adapter.ItemClickSupport;
-import com.example.nromantsov.imageviewer.Adapter.RecyclerAdapter;
-import com.example.nromantsov.imageviewer.ApplicationBase;
+import com.example.nromantsov.imageviewer.View.Adapter.ItemClickSupport;
+import com.example.nromantsov.imageviewer.View.Adapter.RecyclerAdapter;
+import com.example.nromantsov.imageviewer.View.ApplicationBase;
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
-import com.example.nromantsov.imageviewer.MainActivity;
 import com.example.nromantsov.imageviewer.R;
 
 import java.util.ArrayList;
