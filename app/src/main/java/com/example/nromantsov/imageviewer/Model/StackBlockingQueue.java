@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.AsyncTask;
+package com.example.nromantsov.imageviewer.Model;
 
 import java.util.AbstractQueue;
 import java.util.Collection;
