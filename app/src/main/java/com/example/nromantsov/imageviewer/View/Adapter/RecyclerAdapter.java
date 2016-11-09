@@ -1,15 +1,13 @@
-package com.example.nromantsov.imageviewer.Adapter;
+package com.example.nromantsov.imageviewer.View.Adapter;
 
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.support.v7.widget.RecyclerView;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.nromantsov.imageviewer.AsyncTask.DownLoadImage;
+import com.example.nromantsov.imageviewer.Model.DownLoadImage;
 import com.example.nromantsov.imageviewer.R;
 
 import java.util.List;
@@ -72,10 +70,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
 
     @Override
     public int getItemCount() {
-        return sourceList.size();
-    }
-
-    public void setLoadData(LoadData loadData) {
-        this.loadData = loadData;
+        return sourceList != null ? sourceList.size() : 0;
     }
 }
