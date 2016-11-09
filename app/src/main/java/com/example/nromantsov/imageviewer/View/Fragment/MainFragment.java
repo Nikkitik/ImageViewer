@@ -65,9 +65,9 @@ public class MainFragment extends Fragment implements IView {
         if (adapter == null) {
             presenter.setTag("");
             presenter.getUrl();
-            adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth);
+            adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth, presenter);
         } else {
-            adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth);
+            adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth, presenter);
         }
 
         recyclerView.setAdapter(adapter);
@@ -89,20 +89,8 @@ public class MainFragment extends Fragment implements IView {
                         .commit();
             }
         });
-
-//        adapter.setLoadData(new RecyclerAdapter.LoadData() {
-//            @Override
-//            public void load() {
-//                loadMore();
-//            }
-//        });
         return v;
     }
-
-//    private void loadMore() {
-//        page++;
-//        new ParserJSON(this, progressBar, page, tag).execute();
-//    }
 
     @Override
     public void loadUrl(List<String> urls) {
