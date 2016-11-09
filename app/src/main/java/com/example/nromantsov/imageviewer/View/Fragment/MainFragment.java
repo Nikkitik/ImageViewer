@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.Fragment;
+package com.example.nromantsov.imageviewer.View.Fragment;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -13,16 +13,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.nromantsov.imageviewer.Adapter.ItemClickSupport;
-import com.example.nromantsov.imageviewer.Adapter.RecyclerAdapter;
-import com.example.nromantsov.imageviewer.AsyncTask.ParserJSON;
+import com.example.nromantsov.imageviewer.Fragment.FragmentAbout;
+import com.example.nromantsov.imageviewer.Model.ParserJSON;
 import com.example.nromantsov.imageviewer.Interface.ISourceArray;
+import com.example.nromantsov.imageviewer.Presenter.UrlListPresenter;
 import com.example.nromantsov.imageviewer.R;
+import com.example.nromantsov.imageviewer.View.Adapter.ItemClickSupport;
+import com.example.nromantsov.imageviewer.View.Adapter.RecyclerAdapter;
+import com.example.nromantsov.imageviewer.View.Interface.IView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment implements ISourceArray {
+public class MainFragment extends Fragment implements IView {
     List<String> sourceList = new ArrayList<>();
     RecyclerAdapter adapter = null;
     ProgressBar progressBar;
@@ -39,10 +42,7 @@ public class MainFragment extends Fragment implements ISourceArray {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-        Bundle bundle = getArguments();
-
-        if (bundle != null)
-            tag = getArguments().getString("tag", "weather");
+        UrlListPresenter presenter = new UrlListPresenter(this);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -50,6 +50,8 @@ public class MainFragment extends Fragment implements ISourceArray {
         int screenHeight = displaymetrics.heightPixels;
 
         progressBar = (ProgressBar) v.findViewById(R.id.progressbar);
+        hideProgressbar();
+
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.rvImage);
         recyclerView.setHasFixedSize(true);
 
@@ -63,10 +65,10 @@ public class MainFragment extends Fragment implements ISourceArray {
         recyclerView.setLayoutManager(layoutManager);
 
         if (adapter == null) {
-            new ParserJSON(this, progressBar, page, tag).execute();
+            presenter.setTag("");
+            presenter.getUrl();
             adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth);
         } else {
-            progressBar.setVisibility(View.GONE);
             adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth);
         }
 
@@ -90,25 +92,37 @@ public class MainFragment extends Fragment implements ISourceArray {
             }
         });
 
-        adapter.setLoadData(new RecyclerAdapter.LoadData() {
-            @Override
-            public void load() {
-                loadMore();
-            }
-        });
+//        adapter.setLoadData(new RecyclerAdapter.LoadData() {
+//            @Override
+//            public void load() {
+//                loadMore();
+//            }
+//        });
         return v;
     }
 
-    private void loadMore() {
-        page++;
-        new ParserJSON(this, progressBar, page, tag).execute();
+//    private void loadMore() {
+//        page++;
+//        new ParserJSON(this, progressBar, page, tag).execute();
+//    }
+
+    @Override
+    public void loadUrl(List<String> urls) {
+        if (urls != null) {
+            for (int i = 0; i < urls.size(); i++) {
+                sourceList.add(urls.get(i));
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
-    public void sourceLoader(List<String> strings) {
-        for (int i = 0; i < strings.size(); i++) {
-            sourceList.add(strings.get(i));
-        }
-        adapter.notifyDataSetChanged();
+    public void showProgressbar() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgressbar() {
+        progressBar.setVisibility(View.GONE);
     }
 }
