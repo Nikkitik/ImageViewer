@@ -29,8 +29,6 @@ public class MainFragment extends Fragment implements IView {
     List<String> sourceList = new ArrayList<>();
     RecyclerAdapter adapter = null;
     ProgressBar progressBar;
-    int page = 1;
-    String tag;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +80,7 @@ public class MainFragment extends Fragment implements IView {
                 Bundle bundle = new Bundle();
 
                 bundle.putString("url", sourceList.get(position));
-                bundle.putString("tag", tag);
+//                bundle.putString("tag", tag);
 
                 fragmentAbout.setArguments(bundle);
                 FragmentManager fragmentManager = getFragmentManager();
