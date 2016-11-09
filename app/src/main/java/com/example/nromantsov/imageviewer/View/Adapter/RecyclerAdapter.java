@@ -8,19 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.Model.DownLoadImage;
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
 import com.example.nromantsov.imageviewer.R;
 
 import java.util.List;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageHolder> {
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageHolder>{
 
     private List<String> sourceList;
-    private LoadData loadData;
     private int screenHeight, screenWidth;
 
-    public interface LoadData {
-        void load();
-    }
+    private IPresenter iPresenter;
 
     static class ImageHolder extends RecyclerView.ViewHolder {
         ImageView imgView;
@@ -31,10 +29,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
         }
     }
 
-    public RecyclerAdapter(List<String> sourceList, int screenHeight, int screenWidth) {
+    public RecyclerAdapter(List<String> sourceList, int screenHeight, int screenWidth, IPresenter iPresenter) {
         this.sourceList = sourceList;
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;
+        this.iPresenter = iPresenter;
     }
 
     @Override
@@ -61,9 +60,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
         holder.imgView.setTag(sourceList.get(position));
         new DownLoadImage(holder.imgView).executeOnExecutor(DownLoadImage.THREAD_POOL_EXECUTOR, sourceList.get(position));
 
-        if (loadData != null) {
+        if (iPresenter != null) {
             if (position >= getItemCount() - 1) {
-                loadData.load();
+                iPresenter.loadData();
             }
         }
     }
