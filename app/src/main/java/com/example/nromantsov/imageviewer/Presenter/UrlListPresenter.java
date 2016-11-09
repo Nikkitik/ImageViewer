@@ -11,9 +11,8 @@ import java.util.List;
 public class UrlListPresenter implements IPresenter {
     private IView iView;
 
-    private List<String> urls = new ArrayList<>();
     private String tag;
-    private int page;
+    private int page = 1;
 
     public UrlListPresenter(IView iView) {
         this.iView = iView;
@@ -25,10 +24,7 @@ public class UrlListPresenter implements IPresenter {
         new ParserJSON(new IModel() {
             @Override
             public void listUrl(List<String> urlList) {
-                for (int i = 0; i < urlList.size(); i++) {
-                    urls.add(urlList.get(i));
-                }
-                iView.loadUrl(urls);
+                iView.loadUrl(urlList);
                 iView.hideProgressbar();
             }
         }, this).execute();
@@ -48,13 +44,17 @@ public class UrlListPresenter implements IPresenter {
 
     @Override
     public void setPage(int page) {
-        if (page == 0)
-            page = 1;
-        this.page = page;
+        this.page = ++page;
     }
 
     @Override
     public Integer getPage() {
         return page;
+    }
+
+    @Override
+    public void loadData() {
+        setPage(page);
+        getUrl();
     }
 }
