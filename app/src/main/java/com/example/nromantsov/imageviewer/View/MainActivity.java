@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer;
+package com.example.nromantsov.imageviewer.View;
 
 //https://github.com/KKorvin/TinyStockQuotes
 
@@ -21,7 +21,8 @@ import android.widget.Toast;
 
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.Fragment.DialogFragmentSearch;
-import com.example.nromantsov.imageviewer.Fragment.FragmentPagerAdapter;
+import com.example.nromantsov.imageviewer.R;
+import com.example.nromantsov.imageviewer.View.Fragment.FragmentPagerAdapter;
 
 import java.io.File;
 

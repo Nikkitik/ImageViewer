@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer;
+package com.example.nromantsov.imageviewer.View;
 
 import com.example.nromantsov.imageviewer.DataBase.ObserverChange;
 import com.facebook.stetho.Stetho;
