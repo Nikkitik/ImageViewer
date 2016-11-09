@@ -14,8 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.nromantsov.imageviewer.Fragment.FragmentAbout;
-import com.example.nromantsov.imageviewer.Model.ParserJSON;
-import com.example.nromantsov.imageviewer.Interface.ISourceArray;
 import com.example.nromantsov.imageviewer.Presenter.UrlListPresenter;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Adapter.ItemClickSupport;
