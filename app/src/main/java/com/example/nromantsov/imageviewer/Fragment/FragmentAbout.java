@@ -15,10 +15,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.nromantsov.imageviewer.AsyncTask.DownLoadImage;
+import com.example.nromantsov.imageviewer.Model.DownLoadImage;
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.DataBase.UrlBase;
-import com.example.nromantsov.imageviewer.MainActivity;
+import com.example.nromantsov.imageviewer.View.MainActivity;
 import com.example.nromantsov.imageviewer.R;
 
 import java.util.List;
