@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.nromantsov.imageviewer.ApplicationBase;
+import com.example.nromantsov.imageviewer.View.ApplicationBase;
 
 import java.util.ArrayList;
 import java.util.List;
