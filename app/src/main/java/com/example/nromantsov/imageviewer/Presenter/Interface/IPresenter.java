@@ -8,4 +8,6 @@ public interface IPresenter {
 
     void setPage(int page);
     Integer getPage();
+
+    void loadData();
 }
