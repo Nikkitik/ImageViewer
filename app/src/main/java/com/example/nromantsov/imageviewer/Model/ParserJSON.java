@@ -1,10 +1,12 @@
-package com.example.nromantsov.imageviewer.AsyncTask;
+package com.example.nromantsov.imageviewer.Model;
 
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.example.nromantsov.imageviewer.Interface.ISourceArray;
+import com.example.nromantsov.imageviewer.Model.Interface.IModel;
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,26 +19,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParserJSON extends AsyncTask<String, Integer, Void> {
-
-    private String resultJSON;
+public class ParserJSON extends AsyncTask<String, Integer, Boolean> {
     private List<String> sourceArray = new ArrayList<>();
-    private ProgressBar progressBar;
-    private ISourceArray iSourceArray;
-    private int page;
-    private String tag;
 
-    public ParserJSON(ISourceArray iSourceArray, ProgressBar progressBar, int page, String tag) {
-        this.iSourceArray = iSourceArray;
-        this.progressBar = progressBar;
-        this.page = page;
-        this.tag = tag;
+    private IModel iModel;
+    private IPresenter iPresenter;
+
+    public ParserJSON(IModel iModel, IPresenter iPresenter) {
+        this.iModel = iModel;
+        this.iPresenter = iPresenter;
     }
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected Boolean doInBackground(String... params) {
         try {
-            URL url = new URL("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=4fe038fa52c229b33d82da3283567c6c&tags=" + tag + "&license=&page=" + page + "&format=json&nojsoncallback=1");
+            URL url = new URL("https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=4fe038fa52c229b33d82da3283567c6c&tags=" + iPresenter.getTag() + "&license=&page=1&format=json&nojsoncallback=1");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
@@ -51,12 +48,8 @@ public class ParserJSON extends AsyncTask<String, Integer, Void> {
                 buffer.append(line);
             }
 
-            resultJSON = buffer.toString();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            String resultJSON = buffer.toString();
 
-        try {
             JSONObject jsonObject = new JSONObject(resultJSON);
             JSONObject photos = jsonObject.getJSONObject("photos");
 
@@ -76,15 +69,13 @@ public class ParserJSON extends AsyncTask<String, Integer, Void> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return true;
     }
 
     @Override
-    protected void onPostExecute(Void v) {
-        if (iSourceArray != null) {
-            iSourceArray.sourceLoader(sourceArray);
-        }
-
-        progressBar.setVisibility(View.GONE);
+    protected void onPostExecute(Boolean result) {
+        super.onPostExecute(result);
+        if (result)
+            iModel.listUrl(sourceArray);
     }
 }
