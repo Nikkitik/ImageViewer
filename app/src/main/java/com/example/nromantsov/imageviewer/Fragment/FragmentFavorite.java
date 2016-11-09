@@ -64,7 +64,7 @@ public class FragmentFavorite extends Fragment implements Observer {
 
         recyclerView.setLayoutManager(layoutManager);
 
-        adapter = new RecyclerAdapter(urlBase, screenHeight, screenWidth);
+//        adapter = new RecyclerAdapter(urlBase, screenHeight, screenWidth);
 
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -92,7 +92,7 @@ public class FragmentFavorite extends Fragment implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         urlBase = dbHandler.getUrls(tag);
-        adapter = new RecyclerAdapter(urlBase, screenHeight, screenWidth);
+//        adapter = new RecyclerAdapter(urlBase, screenHeight, screenWidth);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
