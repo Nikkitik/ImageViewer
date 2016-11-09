@@ -2,10 +2,10 @@ package com.example.nromantsov.imageviewer.View;
 
 //https://github.com/KKorvin/TinyStockQuotes
 
-
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.Fragment.DialogFragmentSearch;
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
+import com.example.nromantsov.imageviewer.Presenter.UrlListPresenter;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Fragment.FragmentPagerAdapter;
 
@@ -29,8 +31,9 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DialogFragmentSearch.OnTagDialog {
     FragmentManager fragmentManager;
     ViewPager viewPager;
-    String tagEng = "weather";
     ActionBarDrawerToggle toggle;
+
+    IPresenter iPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
         tabs.setTabMode(TabLayout.MODE_FIXED);
 
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tagEng));
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager));
         tabs.setupWithViewPager(viewPager);
         setDrawerIndicatorEnabled(true);
     }
@@ -102,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         break;
                     case 1:
                         DbHandler dbHandler = new DbHandler(this);
-                        dbHandler.deleteUrls(tagEng);
+//                        dbHandler.deleteUrls(tagEng);
                         Toast.makeText(this, "Delete Base", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -134,32 +137,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        switch (id) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.cars:
                 removeAbout();
-                tagEng = "car";
+                iPresenter.setTag("car");
                 break;
             case R.id.robots:
                 removeAbout();
-                tagEng = "robots";
+                iPresenter.setTag("robots");
                 break;
             case R.id.flights:
                 removeAbout();
-                tagEng = "aircraft";
+                iPresenter.setTag("aircraft");
                 break;
             case R.id.trains:
                 removeAbout();
-                tagEng = "trains";
+                iPresenter.setTag("trains");
                 break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tagEng));
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager));
         return true;
     }
 
@@ -174,6 +174,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onTag(String tag) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tag));
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager));
     }
 }
