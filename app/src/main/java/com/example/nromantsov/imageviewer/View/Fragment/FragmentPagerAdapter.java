@@ -1,25 +1,32 @@
 package com.example.nromantsov.imageviewer.View.Fragment;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
+    private String tag;
 
-    public FragmentPagerAdapter(FragmentManager fm) {
+    public FragmentPagerAdapter(FragmentManager fm, String tag) {
         super(fm);
+        this.tag = tag;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new MainFragment();
+                MainFragment mainFragment = new MainFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("tag", tag);
+                mainFragment.setArguments(bundle);
+                return mainFragment;
 //            case 1:
 //                FragmentFavorite fragmentFavorite = new FragmentFavorite();
-//                Bundle bundlefav = new Bundle();
-//                bundlefav.putString("tag", tag);
-//                fragmentFavorite.setArguments(bundlefav);
+//                bundle = new Bundle();
+//                bundle.putString("tag", tag);
+//                fragmentFavorite.setArguments(bundle);
 //                return fragmentFavorite;
             default:
                 return null;
