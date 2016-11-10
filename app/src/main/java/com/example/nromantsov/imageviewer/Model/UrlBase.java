@@ -1,8 +1,7 @@
-package com.example.nromantsov.imageviewer.DataBase;
+package com.example.nromantsov.imageviewer.Model;
 
 public class UrlBase {
-    String tag;
-    String url;
+    private String tag, url;
 
     public UrlBase(String tag, String url) {
         this.tag = tag;
