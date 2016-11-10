@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.Fragment;
+package com.example.nromantsov.imageviewer.View.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
