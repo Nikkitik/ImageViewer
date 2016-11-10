@@ -15,83 +15,41 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.nromantsov.imageviewer.Model.DownLoadImage;
-import com.example.nromantsov.imageviewer.DataBase.DbHandler;
-import com.example.nromantsov.imageviewer.DataBase.UrlBase;
+import com.example.nromantsov.imageviewer.Model.DbHandler;
+import com.example.nromantsov.imageviewer.Presenter.AboutPresenter;
+import com.example.nromantsov.imageviewer.View.Interface.IViewAbout;
 import com.example.nromantsov.imageviewer.View.MainActivity;
 import com.example.nromantsov.imageviewer.R;
 
-import java.util.List;
-
-public class FragmentAbout extends Fragment {
-
-    Snackbar snackbar;
-    String url, tag;
-    Boolean nameUrl = false;
-
-    DbHandler dbHandler;
+public class FragmentAbout extends Fragment implements IViewAbout {
+    AboutPresenter aboutPresenter;
     FloatingActionButton fab;
+    Snackbar snackbar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_about, container, false);
+        fab = (FloatingActionButton) v.findViewById(R.id.fab);
         ImageView imageView = (ImageView) v.findViewById(R.id.imgAbout);
         setHasOptionsMenu(true);
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Подробно");
-        ((MainActivity)getActivity()).setDrawerIndicatorEnabled(false);
+        aboutPresenter = new AboutPresenter(this, getActivity(), imageView);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Подробно");
+        ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            url = bundle.getString("url");
-            tag = bundle.getString("tag");
-            imageView.setTag(url);
-            new DownLoadImage(imageView).execute(url);
+            aboutPresenter.setUrlTag(bundle.getString("url"), bundle.getString("tag"));
         }
 
-        fab = (FloatingActionButton) v.findViewById(R.id.fab);
-
-        dbHandler = new DbHandler(getActivity());
-        List<String> urlList = dbHandler.getUrls(tag);
-
-
-        for (int i = 0; i < urlList.size(); i++) {
-            if (url.equals(urlList.get(i)))
-                nameUrl = true;
-        }
-
-        if (nameUrl)
-            fab.setImageResource(R.drawable.star_black);
-        else
-            fab.setImageResource(R.drawable.star_white);
+        aboutPresenter.loadUrlsDataBase();
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (nameUrl) {
-                    snackbar = Snackbar.make(view, "Удалено из избранного :)", Snackbar.LENGTH_LONG)
-                            .setAction("Отмена", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    addURLDataBase();
-                                }
-                            });
-                    snackbar.show();
-
-                    deleteURLDataBase();
-                } else {
-                    snackbar = Snackbar.make(view, "Добавлено в избранное :)", Snackbar.LENGTH_LONG)
-                            .setAction("Отмена", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    deleteURLDataBase();
-                                }
-                            });
-                    snackbar.show();
-
-                    addURLDataBase();
-                }
+                showSnackBar(view);
             }
         });
         return v;
@@ -102,30 +60,53 @@ public class FragmentAbout extends Fragment {
         menu.findItem(R.id.action_search).setVisible(false);
     }
 
-    public void addURLDataBase() {
-        dbHandler.addUrl(new UrlBase(tag, url));
-        nameUrl = true;
-        fab.setImageResource(R.drawable.star_black);
-    }
-
-    public void deleteURLDataBase() {
-        dbHandler.deleteUrlFavorite(url);
-        nameUrl = false;
-        fab.setImageResource(R.drawable.star_white);
-    }
-
     @Override
     public void onDestroy() {
         ((MainActivity) getActivity()).setDrawerIndicatorEnabled(true);
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Мои картинки");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Мои картинки");
         super.onDestroy();
     }
 
     private static final String TAG = "FragmentAbout";
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d(TAG, "onOptionsItemSelected: ");
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void colorFloatingActionButton(Boolean result) {
+        if (result)
+            fab.setImageResource(R.drawable.star_black);
+        else
+            fab.setImageResource(R.drawable.star_white);
+    }
+
+    @Override
+    public void showSnackBar(View view) {
+        Boolean flag = aboutPresenter.getFlag();
+        if (flag) {
+            snackbar = Snackbar.make(view, "Удалено из избранного :)", Snackbar.LENGTH_LONG)
+                    .setAction("Отмена", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            aboutPresenter.addDataBase();
+                        }
+                    });
+            snackbar.show();
+            aboutPresenter.deleteDataBase();
+        } else {
+            snackbar = Snackbar.make(view, "Добавлено в избранное :)", Snackbar.LENGTH_LONG)
+                    .setAction("Отмена", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            aboutPresenter.deleteDataBase();
+                        }
+                    });
+            snackbar.show();
+            aboutPresenter.addDataBase();
+        }
     }
 }
 
