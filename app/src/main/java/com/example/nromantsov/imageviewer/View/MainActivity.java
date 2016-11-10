@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.Fragment.DialogFragmentSearch;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
-import com.example.nromantsov.imageviewer.Presenter.UrlListPresenter;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Fragment.FragmentPagerAdapter;
 
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ViewPager viewPager;
     ActionBarDrawerToggle toggle;
 
-    IPresenter iPresenter;
+    String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
         tabs.setTabMode(TabLayout.MODE_FIXED);
 
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager));
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tag));
         tabs.setupWithViewPager(viewPager);
         setDrawerIndicatorEnabled(true);
     }
@@ -141,25 +139,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (item.getItemId()) {
             case R.id.cars:
                 removeAbout();
-                iPresenter.setTag("car");
+                tag = "car";
                 break;
             case R.id.robots:
                 removeAbout();
-                iPresenter.setTag("robots");
+                tag = "robots";
                 break;
             case R.id.flights:
                 removeAbout();
-                iPresenter.setTag("aircraft");
+                tag = "aircraft";
                 break;
             case R.id.trains:
                 removeAbout();
-                iPresenter.setTag("trains");
+                tag = "trains";
                 break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager));
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tag));
         return true;
     }
 
@@ -174,6 +172,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onTag(String tag) {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager));
+        viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tag));
     }
 }
