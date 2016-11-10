@@ -28,6 +28,8 @@ public class MainFragment extends Fragment implements IView {
     RecyclerAdapter adapter = null;
     ProgressBar progressBar;
 
+    String tag;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +41,11 @@ public class MainFragment extends Fragment implements IView {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         UrlListPresenter presenter = new UrlListPresenter(this);
+
+        Bundle bundle = getArguments();
+        if (bundle != null)
+            tag = bundle.getString("tag");
+        presenter.setTag(tag);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -61,7 +68,6 @@ public class MainFragment extends Fragment implements IView {
         recyclerView.setLayoutManager(layoutManager);
 
         if (adapter == null) {
-            presenter.setTag("");
             presenter.getUrl();
             adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth, presenter);
         } else {
