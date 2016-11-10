@@ -3,31 +3,35 @@ package com.example.nromantsov.imageviewer.Presenter;
 import com.example.nromantsov.imageviewer.Model.Interface.IModel;
 import com.example.nromantsov.imageviewer.Model.ParserJSON;
 import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
-import com.example.nromantsov.imageviewer.View.Interface.IView;
+import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UrlListPresenter implements IPresenter {
-    private IView iView;
+    private IViewMain iViewMain;
 
     private String tag;
     private int page = 1;
 
-    public UrlListPresenter(IView iView) {
-        this.iView = iView;
+    public UrlListPresenter(IViewMain iViewMain) {
+        this.iViewMain = iViewMain;
     }
 
     @Override
     public void getUrl() {
-        iView.showProgressbar();
+        iViewMain.showProgressbar();
         new ParserJSON(new IModel() {
             @Override
             public void listUrl(List<String> urlList) {
-                iView.loadUrl(urlList);
-                iView.hideProgressbar();
+                iViewMain.loadUrl(urlList);
+                iViewMain.hideProgressbar();
             }
         }, this).execute();
+    }
+
+    @Override
+    public void setUrlAbout(String url) {
+        iViewMain.loadAboutFragment(url, tag);
     }
 
     @Override
