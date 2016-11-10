@@ -13,17 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.nromantsov.imageviewer.Fragment.FragmentAbout;
 import com.example.nromantsov.imageviewer.Presenter.UrlListPresenter;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Adapter.ItemClickSupport;
 import com.example.nromantsov.imageviewer.View.Adapter.RecyclerAdapter;
-import com.example.nromantsov.imageviewer.View.Interface.IView;
+import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainFragment extends Fragment implements IView {
+public class MainFragment extends Fragment implements IViewMain {
     List<String> sourceList = new ArrayList<>();
     RecyclerAdapter adapter = null;
     ProgressBar progressBar;
@@ -40,7 +39,7 @@ public class MainFragment extends Fragment implements IView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-        UrlListPresenter presenter = new UrlListPresenter(this);
+        final UrlListPresenter presenter = new UrlListPresenter(this);
 
         Bundle bundle = getArguments();
         if (bundle != null)
@@ -80,17 +79,7 @@ public class MainFragment extends Fragment implements IView {
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-                FragmentAbout fragmentAbout = new FragmentAbout();
-                Bundle bundle = new Bundle();
-
-                bundle.putString("url", sourceList.get(position));
-//                bundle.putString("tag", tag);
-
-                fragmentAbout.setArguments(bundle);
-                FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.fl, fragmentAbout, "about")
-                        .addToBackStack(null)
-                        .commit();
+                presenter.setUrlAbout(sourceList.get(position));
             }
         });
         return v;
@@ -104,6 +93,20 @@ public class MainFragment extends Fragment implements IView {
             }
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void loadAboutFragment(String url, String tag) {
+        FragmentAbout fragmentAbout = new FragmentAbout();
+        Bundle bundle = new Bundle();
+        bundle.putString("url", url);
+        bundle.putString("tag", tag);
+
+        fragmentAbout.setArguments(bundle);
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.fl, fragmentAbout, "about")
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
