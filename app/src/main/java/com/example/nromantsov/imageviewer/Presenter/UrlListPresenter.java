@@ -33,7 +33,7 @@ public class UrlListPresenter implements IPresenter {
     @Override
     public void setTag(String tag) {
         if (tag == null || tag.isEmpty())
-            tag = "cat";
+            tag = "popular";
 
         this.tag = tag;
     }
