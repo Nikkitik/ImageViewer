@@ -1,10 +1,6 @@
 package com.example.nromantsov.imageviewer.Model;
 
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ProgressBar;
-
-import com.example.nromantsov.imageviewer.Interface.ISourceArray;
 import com.example.nromantsov.imageviewer.Model.Interface.IModel;
 import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
 
