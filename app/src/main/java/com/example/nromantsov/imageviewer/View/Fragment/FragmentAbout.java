@@ -1,5 +1,6 @@
 package com.example.nromantsov.imageviewer.View.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -22,6 +23,7 @@ import com.example.nromantsov.imageviewer.View.MainActivity;
 import com.example.nromantsov.imageviewer.R;
 
 public class FragmentAbout extends Fragment implements IViewAbout {
+    private final static String CANCEL_TEXT = "Отмена";
     AboutPresenter aboutPresenter;
     FloatingActionButton fab;
     Snackbar snackbar;
@@ -34,7 +36,7 @@ public class FragmentAbout extends Fragment implements IViewAbout {
         ImageView imageView = (ImageView) v.findViewById(R.id.imgAbout);
         setHasOptionsMenu(true);
 
-        aboutPresenter = new AboutPresenter(this, getActivity(), imageView);
+        aboutPresenter = new AboutPresenter(this, imageView);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Подробно");
         ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
@@ -49,7 +51,7 @@ public class FragmentAbout extends Fragment implements IViewAbout {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showSnackBar(view);
+                aboutPresenter.applySnackBar(view);
             }
         });
         return v;
@@ -84,29 +86,43 @@ public class FragmentAbout extends Fragment implements IViewAbout {
     }
 
     @Override
-    public void showSnackBar(View view) {
-        Boolean flag = aboutPresenter.getFlag();
-        if (flag) {
-            snackbar = Snackbar.make(view, "Удалено из избранного :)", Snackbar.LENGTH_LONG)
-                    .setAction("Отмена", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            aboutPresenter.addDataBase();
-                        }
-                    });
-            snackbar.show();
-            aboutPresenter.deleteDataBase();
-        } else {
-            snackbar = Snackbar.make(view, "Добавлено в избранное :)", Snackbar.LENGTH_LONG)
-                    .setAction("Отмена", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            aboutPresenter.deleteDataBase();
-                        }
-                    });
-            snackbar.show();
-            aboutPresenter.addDataBase();
-        }
+    public void showSnackBar(View view, String msg) {
+        snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG)
+                .setAction(CANCEL_TEXT, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        aboutPresenter.cancelSnackBar();
+                    }
+                });
+        snackbar.show();
+    }
+
+//    Boolean flag = aboutPresenter.getFlag();
+//    if (flag) {
+//        snackbar = Snackbar.make(view, "Удалено из избранного :)", Snackbar.LENGTH_LONG)
+//                .setAction(CANCEL_TEXT, new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        aboutPresenter.addDataBase();
+//                    }
+//                });
+//        snackbar.show();
+//        aboutPresenter.deleteDataBase();
+//    } else {
+//        snackbar = Snackbar.make(view, "Добавлено в избранное :)", Snackbar.LENGTH_LONG)
+//                .setAction("Отмена", new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        aboutPresenter.deleteDataBase();
+//                    }
+//                });
+//        snackbar.show();
+//        aboutPresenter.addDataBase();
+//    }
+
+    @Override
+    public Context getContext() {
+        return getActivity();
     }
 }
 
