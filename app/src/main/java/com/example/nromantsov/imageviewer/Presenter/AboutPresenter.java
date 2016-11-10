@@ -1,6 +1,6 @@
 package com.example.nromantsov.imageviewer.Presenter;
 
-import android.app.Activity;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.Model.DbHandler;
@@ -13,17 +13,14 @@ import java.util.List;
 
 public class AboutPresenter implements IPresenterAbout {
     private IViewAbout iViewAbout;
-    private Activity activity;
     private ImageView imageView;
 
     private DbHandler dbHandler;
     private String tag, url;
-    private List<String> urlList;
     private Boolean flag = false;
 
-    public AboutPresenter(IViewAbout iViewAbout, Activity activity, ImageView imageView) {
+    public AboutPresenter(IViewAbout iViewAbout, ImageView imageView) {
         this.iViewAbout = iViewAbout;
-        this.activity = activity;
         this.imageView = imageView;
     }
 
@@ -36,25 +33,43 @@ public class AboutPresenter implements IPresenterAbout {
     }
 
     @Override
-    public Boolean getFlag() {
-        return flag;
+    public List<String> loadUrlsDataBase() {
+        dbHandler = new DbHandler(iViewAbout.getContext());
+        List<String> urlList = dbHandler.getUrls(tag);
+
+        if (urlList.size() == 0) {
+            flag = false;
+        } else {
+            for (int i = 0; i < urlList.size(); i++) {
+                if (url.equals(urlList.get(i))) {
+                    flag = true;
+                    break;
+                }
+                flag = false;
+            }
+        }
+        iViewAbout.colorFloatingActionButton(flag);
+        return urlList;
     }
 
     @Override
-    public List<String> loadUrlsDataBase() {
-        dbHandler = new DbHandler(activity.getApplicationContext());
-        urlList = dbHandler.getUrls(tag);
-
-        for (int i = 0; i < urlList.size(); i++) {
-            if (url.equals(urlList.get(i))) {
-                flag = true;
-                break;
-            }
-            flag = false;
+    public void applySnackBar(View view) {
+        if (flag) {
+            iViewAbout.showSnackBar(view, "Удалено из избранного :)");
+            deleteDataBase();
+        }else {
+            iViewAbout.showSnackBar(view, "Добавлено в избранное :)");
+            addDataBase();
         }
-        iViewAbout.colorFloatingActionButton(flag);
+    }
 
-        return urlList;
+    @Override
+    public void cancelSnackBar() {
+        if (flag) {
+            deleteDataBase();
+        }else {
+            addDataBase();
+        }
     }
 
     @Override
