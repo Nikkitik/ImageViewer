@@ -17,6 +17,7 @@ import com.example.nromantsov.imageviewer.View.Adapter.RecyclerAdapter;
 import com.example.nromantsov.imageviewer.View.ApplicationBase;
 import com.example.nromantsov.imageviewer.DataBase.DbHandler;
 import com.example.nromantsov.imageviewer.R;
+import com.example.nromantsov.imageviewer.View.Fragment.FragmentAbout;
 
 import java.util.ArrayList;
 import java.util.List;
