@@ -19,7 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.example.nromantsov.imageviewer.DataBase.DbHandler;
+import com.example.nromantsov.imageviewer.Model.DbHandler;
 import com.example.nromantsov.imageviewer.Fragment.DialogFragmentSearch;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Fragment.FragmentPagerAdapter;
