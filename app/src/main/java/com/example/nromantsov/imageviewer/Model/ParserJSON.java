@@ -2,7 +2,7 @@ package com.example.nromantsov.imageviewer.Model;
 
 import android.os.AsyncTask;
 import com.example.nromantsov.imageviewer.Model.Interface.IModel;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,9 +19,9 @@ public class ParserJSON extends AsyncTask<String, Integer, Boolean> {
     private List<String> sourceArray = new ArrayList<>();
 
     private IModel iModel;
-    private IPresenter iPresenter;
+    private IPresenterMain iPresenter;
 
-    public ParserJSON(IModel iModel, IPresenter iPresenter) {
+    public ParserJSON(IModel iModel, IPresenterMain iPresenter) {
         this.iModel = iModel;
         this.iPresenter = iPresenter;
     }

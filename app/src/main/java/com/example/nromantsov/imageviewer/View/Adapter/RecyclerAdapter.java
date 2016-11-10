@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.Model.DownLoadImage;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
 import com.example.nromantsov.imageviewer.R;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
     private List<String> sourceList;
     private int screenHeight, screenWidth;
 
-    private IPresenter iPresenter;
+    private IPresenterMain iPresenter;
 
     static class ImageHolder extends RecyclerView.ViewHolder {
         ImageView imgView;
@@ -29,7 +29,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
         }
     }
 
-    public RecyclerAdapter(List<String> sourceList, int screenHeight, int screenWidth, IPresenter iPresenter) {
+    public RecyclerAdapter(List<String> sourceList, int screenHeight, int screenWidth, IPresenterMain iPresenter) {
         this.sourceList = sourceList;
         this.screenHeight = screenHeight;
         this.screenWidth = screenWidth;

@@ -2,12 +2,12 @@ package com.example.nromantsov.imageviewer.Presenter;
 
 import com.example.nromantsov.imageviewer.Model.Interface.IModel;
 import com.example.nromantsov.imageviewer.Model.ParserJSON;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenter;
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
 import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
 
 import java.util.List;
 
-public class UrlListPresenter implements IPresenter {
+public class UrlListPresenter implements IPresenterMain {
     private IViewMain iViewMain;
 
     private String tag;

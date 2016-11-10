@@ -1,6 +1,6 @@
 package com.example.nromantsov.imageviewer.Presenter.Interface;
 
-public interface IPresenter {
+public interface IPresenterMain {
     void getUrl();
     void setUrlAbout(String url);
 
