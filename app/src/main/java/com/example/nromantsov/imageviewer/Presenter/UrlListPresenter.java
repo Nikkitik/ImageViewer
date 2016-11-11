@@ -1,8 +1,10 @@
 package com.example.nromantsov.imageviewer.Presenter;
 
+import com.example.nromantsov.imageviewer.Model.DbHandler;
 import com.example.nromantsov.imageviewer.Model.Interface.IModel;
 import com.example.nromantsov.imageviewer.Model.ParserJSON;
 import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
+import com.example.nromantsov.imageviewer.View.ApplicationBase;
 import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
 
 import java.util.List;
@@ -11,6 +13,7 @@ public class UrlListPresenter implements IPresenterMain {
     private IViewMain iViewMain;
 
     private String tag;
+    private String name;
     private int page = 1;
 
     public UrlListPresenter(IViewMain iViewMain) {
@@ -19,19 +22,41 @@ public class UrlListPresenter implements IPresenterMain {
 
     @Override
     public void getUrl() {
-        iViewMain.showProgressbar();
-        new ParserJSON(new IModel() {
-            @Override
-            public void listUrl(List<String> urlList) {
-                iViewMain.loadUrl(urlList);
-                iViewMain.hideProgressbar();
-            }
-        }, this).execute();
+        if (name.equals("main")) {
+            if (page < 2)
+                iViewMain.showProgressbar();
+            new ParserJSON(new IModel() {
+                @Override
+                public void listUrl(List<String> urlList) {
+                    iViewMain.loadUrl(urlList);
+                    iViewMain.hideProgressbar();
+                }
+            }, this).execute();
+        }
+        if (name.equals("favorite")) {
+            DbHandler dbHandler = new DbHandler(ApplicationBase.getContext(), this);
+            dbHandler.getUrls(tag);
+        }
     }
 
     @Override
     public void setUrlAbout(String url) {
         iViewMain.loadAboutFragment(url, tag);
+    }
+
+    @Override
+    public void setUrlFavorite(List<String> urls) {
+        iViewMain.loadUrl(urls);
+    }
+
+    @Override
+    public void setFragmentName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getFragmentName() {
+        return name;
     }
 
     @Override
