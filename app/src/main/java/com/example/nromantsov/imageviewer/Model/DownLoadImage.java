@@ -5,6 +5,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterAbout;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -38,8 +40,13 @@ public class DownLoadImage extends AsyncTask<String, Void, Bitmap> {
     public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE,
             TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
 
+    private IPresenterAbout iPresenterAbout;
     private ImageView imageView;
-    String url;
+    private String url;
+
+    public DownLoadImage(IPresenterAbout iPresenterAbout) {
+        this.iPresenterAbout = iPresenterAbout;
+    }
 
     public DownLoadImage(ImageView imageView) {
         this.imageView = imageView;
@@ -76,8 +83,14 @@ public class DownLoadImage extends AsyncTask<String, Void, Bitmap> {
         return image;
     }
 
-    protected void onPostExecute(Bitmap image) {
-        if (imageView.getTag() != null && imageView.getTag().equals(url))
-            imageView.setImageBitmap(image);
+    @Override
+    protected void onPostExecute(Bitmap bitmap) {
+        super.onPostExecute(bitmap);
+        if (iPresenterAbout != null) {
+            iPresenterAbout.setBitmap(bitmap);
+        } else {
+            if (imageView.getTag() != null && imageView.getTag().equals(url))
+                imageView.setImageBitmap(bitmap);
+        }
     }
 }
