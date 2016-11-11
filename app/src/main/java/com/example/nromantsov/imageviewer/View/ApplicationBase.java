@@ -1,16 +1,23 @@
 package com.example.nromantsov.imageviewer.View;
 
-import com.example.nromantsov.imageviewer.DataBase.ObserverChange;
+import android.annotation.SuppressLint;
+import android.content.Context;
+
+import com.example.nromantsov.imageviewer.Model.ObserverChange;
 import com.facebook.stetho.Stetho;
 
 public class ApplicationBase extends android.app.Application {
     public static Obs obs;
+
+    @SuppressLint("StaticFieldLeak")
+    public static Context context;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Stetho.initializeWithDefaults(this);
         obs = new Obs();
+        context = getApplicationContext();
     }
 
     public static class Obs
@@ -24,5 +31,9 @@ public class ApplicationBase extends android.app.Application {
         public ObserverChange getObserverChange() {
             return observerChange;
         }
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }
