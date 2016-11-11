@@ -1,5 +1,6 @@
 package com.example.nromantsov.imageviewer.View.Fragment;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,17 +18,23 @@ import com.example.nromantsov.imageviewer.Presenter.UrlListPresenter;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Adapter.ItemClickSupport;
 import com.example.nromantsov.imageviewer.View.Adapter.RecyclerAdapter;
+import com.example.nromantsov.imageviewer.View.ApplicationBase;
 import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class MainFragment extends Fragment implements IViewMain {
+public class MainFragment extends Fragment implements IViewMain, Observer {
     List<String> sourceList = new ArrayList<>();
     RecyclerAdapter adapter = null;
     ProgressBar progressBar;
+    RecyclerView recyclerView;
+    UrlListPresenter presenter;
 
-    String tag;
+    int screenWidth, screenHeight;
+    String tag, name;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,22 +46,28 @@ public class MainFragment extends Fragment implements IViewMain {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-        final UrlListPresenter presenter = new UrlListPresenter(this);
+        presenter = new UrlListPresenter(this);
+
+        ApplicationBase.obs.getObserverChange().addObserver(this);
 
         Bundle bundle = getArguments();
-        if (bundle != null)
+        if (bundle != null) {
             tag = bundle.getString("tag");
+            name = bundle.getString("fragment");
+        }
+
         presenter.setTag(tag);
+        presenter.setFragmentName(name);
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int screenWidth = displaymetrics.widthPixels;
-        int screenHeight = displaymetrics.heightPixels;
+        screenWidth = displaymetrics.widthPixels;
+        screenHeight = displaymetrics.heightPixels;
 
         progressBar = (ProgressBar) v.findViewById(R.id.progressbar);
         hideProgressbar();
 
-        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.rvImage);
+        recyclerView = (RecyclerView) v.findViewById(R.id.rvImage);
         recyclerView.setHasFixedSize(true);
 
         final RecyclerView.LayoutManager layoutManager;
@@ -67,8 +80,8 @@ public class MainFragment extends Fragment implements IViewMain {
         recyclerView.setLayoutManager(layoutManager);
 
         if (adapter == null) {
-            presenter.getUrl();
             adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth, presenter);
+            presenter.getUrl();
         } else {
             adapter = new RecyclerAdapter(sourceList, screenHeight, screenWidth, presenter);
         }
@@ -85,13 +98,21 @@ public class MainFragment extends Fragment implements IViewMain {
         return v;
     }
 
+
     @Override
     public void loadUrl(List<String> urls) {
         if (urls != null) {
             for (int i = 0; i < urls.size(); i++) {
                 sourceList.add(urls.get(i));
             }
-            adapter.notifyDataSetChanged();
+
+            progressBar.post(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+
         }
     }
 
@@ -117,5 +138,14 @@ public class MainFragment extends Fragment implements IViewMain {
     @Override
     public void hideProgressbar() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void update(Observable observable, Object o) {
+        if (name.equals("favorite")) {
+            sourceList.clear();
+            presenter.getUrl();
+            adapter.notifyDataSetChanged();
+        }
     }
 }
