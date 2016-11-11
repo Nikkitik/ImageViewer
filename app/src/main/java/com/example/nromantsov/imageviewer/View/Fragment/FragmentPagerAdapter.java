@@ -20,14 +20,16 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
                 MainFragment mainFragment = new MainFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("tag", tag);
+                bundle.putString("fragment", "main");
                 mainFragment.setArguments(bundle);
                 return mainFragment;
-//            case 1:
-//                FragmentFavorite fragmentFavorite = new FragmentFavorite();
-//                bundle = new Bundle();
-//                bundle.putString("tag", tag);
-//                fragmentFavorite.setArguments(bundle);
-//                return fragmentFavorite;
+            case 1:
+                MainFragment fragmentFavorite = new MainFragment();
+                bundle = new Bundle();
+                bundle.putString("tag", tag);
+                bundle.putString("fragment", "favorite");
+                fragmentFavorite.setArguments(bundle);
+                return fragmentFavorite;
             default:
                 return null;
         }
@@ -35,7 +37,7 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -45,9 +47,9 @@ public class FragmentPagerAdapter extends FragmentStatePagerAdapter {
             case 0:
                 title = "Фото";
                 break;
-//            case 1:
-//                title = "Избранное";
-//                break;
+            case 1:
+                title = "Избранное";
+                break;
         }
         return title;
     }
