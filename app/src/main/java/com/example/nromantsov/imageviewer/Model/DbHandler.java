@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
 import com.example.nromantsov.imageviewer.View.ApplicationBase;
 
 import java.util.ArrayList;
@@ -19,8 +20,15 @@ public class DbHandler extends SQLiteOpenHelper {
     private static final String KEY_TAG = "tag";
     private static final String KEY_URL = "url";
 
+    private IPresenterMain iPresenter;
+
     public DbHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    }
+
+    public DbHandler(Context context, IPresenterMain iPresenter) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.iPresenter = iPresenter;
     }
 
     @Override
@@ -47,7 +55,7 @@ public class DbHandler extends SQLiteOpenHelper {
         db.insert(TABLE_URLS, null, cv);
         db.close();
 
-        ApplicationBase.obs.getObserverChange().setUrl(urlBase.getUrl());
+        ApplicationBase.obs.getObserverChange().setUrl("add");
     }
 
     public List<String> getUrls(String tag) {
@@ -59,6 +67,8 @@ public class DbHandler extends SQLiteOpenHelper {
             urlsList.add(cursor.getString(0));
         }
         cursor.close();
+        if (iPresenter != null)
+            iPresenter.setUrlFavorite(urlsList);
         return urlsList;
     }
 
