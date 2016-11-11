@@ -1,7 +1,7 @@
 package com.example.nromantsov.imageviewer.Presenter;
 
+import android.graphics.Bitmap;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.Model.DbHandler;
 import com.example.nromantsov.imageviewer.Model.DownLoadImage;
@@ -13,23 +13,25 @@ import java.util.List;
 
 public class AboutPresenter implements IPresenterAbout {
     private IViewAbout iViewAbout;
-    private ImageView imageView;
 
     private DbHandler dbHandler;
     private String tag, url;
     private Boolean flag = false;
 
-    public AboutPresenter(IViewAbout iViewAbout, ImageView imageView) {
+    public AboutPresenter(IViewAbout iViewAbout) {
         this.iViewAbout = iViewAbout;
-        this.imageView = imageView;
     }
 
     @Override
     public void setUrlTag(String url, String tag) {
         this.tag = tag;
         this.url = url;
-        imageView.setTag(url);
-        new DownLoadImage(imageView).execute(url);
+        new DownLoadImage(this).execute(url);
+    }
+
+    @Override
+    public void setBitmap(Bitmap bitmap) {
+        iViewAbout.loadImage(bitmap);
     }
 
     @Override
@@ -57,7 +59,7 @@ public class AboutPresenter implements IPresenterAbout {
         if (flag) {
             iViewAbout.showSnackBar(view, "Удалено из избранного :)");
             deleteDataBase();
-        }else {
+        } else {
             iViewAbout.showSnackBar(view, "Добавлено в избранное :)");
             addDataBase();
         }
@@ -67,7 +69,7 @@ public class AboutPresenter implements IPresenterAbout {
     public void cancelSnackBar() {
         if (flag) {
             deleteDataBase();
-        }else {
+        } else {
             addDataBase();
         }
     }
