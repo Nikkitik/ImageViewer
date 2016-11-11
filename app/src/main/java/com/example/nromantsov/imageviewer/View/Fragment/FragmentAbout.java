@@ -1,6 +1,7 @@
 package com.example.nromantsov.imageviewer.View.Fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.nromantsov.imageviewer.Model.DbHandler;
 import com.example.nromantsov.imageviewer.Presenter.AboutPresenter;
 import com.example.nromantsov.imageviewer.View.Interface.IViewAbout;
 import com.example.nromantsov.imageviewer.View.MainActivity;
@@ -26,6 +26,7 @@ public class FragmentAbout extends Fragment implements IViewAbout {
     private final static String CANCEL_TEXT = "Отмена";
     AboutPresenter aboutPresenter;
     FloatingActionButton fab;
+    ImageView imageView;
     Snackbar snackbar;
 
     @Nullable
@@ -33,10 +34,10 @@ public class FragmentAbout extends Fragment implements IViewAbout {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_about, container, false);
         fab = (FloatingActionButton) v.findViewById(R.id.fab);
-        ImageView imageView = (ImageView) v.findViewById(R.id.imgAbout);
+        imageView = (ImageView) v.findViewById(R.id.imgAbout);
         setHasOptionsMenu(true);
 
-        aboutPresenter = new AboutPresenter(this, imageView);
+        aboutPresenter = new AboutPresenter(this);
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Подробно");
         ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
@@ -97,32 +98,14 @@ public class FragmentAbout extends Fragment implements IViewAbout {
         snackbar.show();
     }
 
-//    Boolean flag = aboutPresenter.getFlag();
-//    if (flag) {
-//        snackbar = Snackbar.make(view, "Удалено из избранного :)", Snackbar.LENGTH_LONG)
-//                .setAction(CANCEL_TEXT, new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        aboutPresenter.addDataBase();
-//                    }
-//                });
-//        snackbar.show();
-//        aboutPresenter.deleteDataBase();
-//    } else {
-//        snackbar = Snackbar.make(view, "Добавлено в избранное :)", Snackbar.LENGTH_LONG)
-//                .setAction("Отмена", new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        aboutPresenter.deleteDataBase();
-//                    }
-//                });
-//        snackbar.show();
-//        aboutPresenter.addDataBase();
-//    }
-
     @Override
     public Context getContext() {
         return getActivity();
+    }
+
+    @Override
+    public void loadImage(Bitmap bitmap) {
+        imageView.setImageBitmap(bitmap);
     }
 }
 
