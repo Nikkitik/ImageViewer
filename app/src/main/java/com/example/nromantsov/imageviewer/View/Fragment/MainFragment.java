@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -20,6 +25,7 @@ import com.example.nromantsov.imageviewer.View.Adapter.ItemClickSupport;
 import com.example.nromantsov.imageviewer.View.Adapter.RecyclerAdapter;
 import com.example.nromantsov.imageviewer.View.ApplicationBase;
 import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
+import com.example.nromantsov.imageviewer.View.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +52,7 @@ public class MainFragment extends Fragment implements IViewMain, Observer {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+        setHasOptionsMenu(true);
         presenter = new UrlListPresenter(this);
 
         ApplicationBase.obs.getObserverChange().addObserver(this);
@@ -58,6 +65,11 @@ public class MainFragment extends Fragment implements IViewMain, Observer {
 
         presenter.setTag(tag);
         presenter.setFragmentName(name);
+
+        if (name.equals("favoriteAll")) {
+            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Избранное");
+            ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
+        }
 
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -142,10 +154,21 @@ public class MainFragment extends Fragment implements IViewMain, Observer {
 
     @Override
     public void update(Observable observable, Object o) {
-        if (name.equals("favorite")) {
+        if (!name.equals("main")) {
             sourceList.clear();
             presenter.getUrl();
             adapter.notifyDataSetChanged();
         }
+    }
+
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.findItem(R.id.action_search).setVisible(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        ((MainActivity) getActivity()).setDrawerIndicatorEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Мои картинки");
+        super.onDestroy();
     }
 }
