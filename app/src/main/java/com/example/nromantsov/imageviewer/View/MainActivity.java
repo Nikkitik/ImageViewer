@@ -17,19 +17,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.example.nromantsov.imageviewer.Model.DbHandler;
-import com.example.nromantsov.imageviewer.Fragment.DialogFragmentSearch;
+import com.example.nromantsov.imageviewer.Presenter.PresenterMainActivity;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Fragment.FragmentPagerAdapter;
+import com.example.nromantsov.imageviewer.View.Interface.IViewMainActivity;
 
-import java.io.File;
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, DialogFragmentSearch.OnTagDialog {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IViewMainActivity {
     FragmentManager fragmentManager;
     ViewPager viewPager;
     ActionBarDrawerToggle toggle;
+    PresenterMainActivity presenterMainActivity;
 
     String tag;
 
@@ -37,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        presenterMainActivity = new PresenterMainActivity(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -93,24 +93,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 int viewPage = viewPager.getCurrentItem();
                 switch (viewPage) {
                     case 0:
-                        File pictureDirectory = new File("data/data/com.example.nromantsov.imageviewer/");
-
-                        for (File f : pictureDirectory.listFiles()) {
-                            f.delete();
-                        }
-
-                        Toast.makeText(this, "Folder is empty", Toast.LENGTH_SHORT).show();
+                        presenterMainActivity.deleteFileFromFolder();
                         break;
                     case 1:
-                        DbHandler dbHandler = new DbHandler(this);
-//                        dbHandler.deleteUrls(tagEng);
-                        Toast.makeText(this, "Delete Base", Toast.LENGTH_SHORT).show();
+                        presenterMainActivity.deleteFileFromDataBase(tag);
                         break;
                 }
                 break;
             case R.id.action_search:
-                DialogFragmentSearch dialogFragmentSearch = new DialogFragmentSearch();
-                dialogFragmentSearch.show(getSupportFragmentManager(), "search");
+                presenterMainActivity.createDialogSearch();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -161,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
     public void removeAbout() {
         if (fragmentManager.findFragmentByTag("about") != null) {
             fragmentManager.findFragmentByTag("about").onDestroy();
