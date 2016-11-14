@@ -22,20 +22,26 @@ public class UrlListPresenter implements IPresenterMain {
 
     @Override
     public void getUrl() {
-        if (name.equals("main")) {
-            if (page < 2)
-                iViewMain.showProgressbar();
-            new ParserJSON(new IModel() {
-                @Override
-                public void listUrl(List<String> urlList) {
-                    iViewMain.loadUrl(urlList);
-                    iViewMain.hideProgressbar();
-                }
-            }, this).execute();
-        }
-        if (name.equals("favorite")) {
-            DbHandler dbHandler = new DbHandler(ApplicationBase.getContext(), this);
-            dbHandler.getUrls(tag);
+        switch (name) {
+            case "main":
+                if (page < 2)
+                    iViewMain.showProgressbar();
+                new ParserJSON(new IModel() {
+                    @Override
+                    public void listUrl(List<String> urlList) {
+                        iViewMain.loadUrl(urlList);
+                        iViewMain.hideProgressbar();
+                    }
+                }, this).execute();
+                break;
+            case "favorite":
+                DbHandler dbHandler = new DbHandler(ApplicationBase.getContext(), this);
+                dbHandler.getUrls(tag);
+                break;
+            case "favoriteAll":
+                dbHandler = new DbHandler(ApplicationBase.getContext(), this);
+                dbHandler.getUrlsAll();
+                break;
         }
     }
 
