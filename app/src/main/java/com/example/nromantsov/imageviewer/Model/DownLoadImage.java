@@ -73,9 +73,6 @@ public class DownLoadImage extends AsyncTask<String, Void, Bitmap> {
                 image.compress(Bitmap.CompressFormat.JPEG, 100, out);
                 out.flush();
                 out.close();
-
-                InputStream inputStream = new FileInputStream(file);
-                image = BitmapFactory.decodeStream(inputStream);
             }
         } catch (Exception e) {
             e.printStackTrace();
