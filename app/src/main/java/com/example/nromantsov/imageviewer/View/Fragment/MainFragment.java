@@ -66,11 +66,6 @@ public class MainFragment extends Fragment implements IViewMain, Observer {
         presenter.setTag(tag);
         presenter.setFragmentName(name);
 
-        if (name.equals("favoriteAll")) {
-            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Избранное");
-            ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
-        }
-
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         screenWidth = displaymetrics.widthPixels;
@@ -162,13 +157,24 @@ public class MainFragment extends Fragment implements IViewMain, Observer {
     }
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.findItem(R.id.action_search).setVisible(false);
-    }
-
-    @Override
-    public void onDestroy() {
-        ((MainActivity) getActivity()).setDrawerIndicatorEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Мои картинки");
-        super.onDestroy();
+        switch (name) {
+            case "main":
+                menu.findItem(R.id.action_search).setVisible(true);
+                menu.findItem(R.id.action_delete).setVisible(true);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Мои картинки");
+                ((MainActivity) getActivity()).setDrawerIndicatorEnabled(true);
+                break;
+            case "favorite":
+                menu.findItem(R.id.action_search).setVisible(true);
+                menu.findItem(R.id.action_delete).setVisible(true);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Мои картинки");
+                ((MainActivity) getActivity()).setDrawerIndicatorEnabled(true);
+                break;
+            case "favoriteAll":
+                menu.findItem(R.id.action_search).setVisible(false);
+                ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Избранное");
+                ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
+                break;
+        }
     }
 }
