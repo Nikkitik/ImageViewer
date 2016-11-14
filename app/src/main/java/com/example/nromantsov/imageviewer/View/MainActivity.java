@@ -17,10 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.nromantsov.imageviewer.Presenter.PresenterMainActivity;
 import com.example.nromantsov.imageviewer.R;
 import com.example.nromantsov.imageviewer.View.Fragment.FragmentPagerAdapter;
+import com.example.nromantsov.imageviewer.View.Fragment.MainFragment;
 import com.example.nromantsov.imageviewer.View.Interface.IViewMainActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IViewMainActivity {
@@ -91,13 +93,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.action_delete:
                 int viewPage = viewPager.getCurrentItem();
-                switch (viewPage) {
-                    case 0:
-                        presenterMainActivity.deleteFileFromFolder();
-                        break;
-                    case 1:
-                        presenterMainActivity.deleteFileFromDataBase(tag);
-                        break;
+                if (fragmentManager.findFragmentByTag("favorite") != null)
+                    presenterMainActivity.deleteAllFileFromDataBase();
+                else {
+                    switch (viewPage) {
+                        case 0:
+                            presenterMainActivity.deleteFileFromFolder();
+                            break;
+                        case 1:
+                            presenterMainActivity.deleteFileFromDataBase(tag);
+                            break;
+                    }
                 }
                 break;
             case R.id.action_search:
@@ -120,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     super.onBackPressed();
             } else {
                 super.onBackPressed();
+                viewPager.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -144,6 +151,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 removeAbout();
                 tag = "trains";
                 break;
+            case R.id.all_favorite:
+                presenterMainActivity.createFavoriteAll();
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                drawer.closeDrawer(GravityCompat.START);
+                return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -165,5 +177,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         viewPager.setAdapter(new FragmentPagerAdapter(fragmentManager, tag));
+    }
+
+    @Override
+    public void loadFragmentFavorite() {
+        viewPager.setVisibility(View.GONE);
+        MainFragment fragmentFavorite = new MainFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("fragment", "favoriteAll");
+        fragmentFavorite.setArguments(bundle);
+        fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.fl, fragmentFavorite, "favorite")
+                .addToBackStack(null)
+                .commit();
     }
 }
