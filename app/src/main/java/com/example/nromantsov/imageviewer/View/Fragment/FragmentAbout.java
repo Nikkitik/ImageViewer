@@ -70,14 +70,6 @@ public class FragmentAbout extends Fragment implements IViewAbout {
         super.onDestroy();
     }
 
-    private static final String TAG = "FragmentAbout";
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d(TAG, "onOptionsItemSelected: ");
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void colorFloatingActionButton(Boolean result) {
         if (result)
