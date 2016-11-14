@@ -1,6 +1,5 @@
-package com.example.nromantsov.imageviewer.Fragment;
+package com.example.nromantsov.imageviewer.View.Fragment;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,25 +14,15 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMainActivity;
 import com.example.nromantsov.imageviewer.R;
 
 public class DialogFragmentSearch extends android.support.v4.app.DialogFragment {
 
-    public interface OnTagDialog {
-        void onTag(String text);
-    }
+    IPresenterMainActivity presenterMain;
 
-    OnTagDialog onTagDialog;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            onTagDialog = (OnTagDialog) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement ChanFragmentListener");
-        }
+    public DialogFragmentSearch(IPresenterMainActivity presenterMain) {
+        this.presenterMain = presenterMain;
     }
 
     @NonNull
@@ -64,7 +53,7 @@ public class DialogFragmentSearch extends android.support.v4.app.DialogFragment 
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 switch (keyEvent.getKeyCode()) {
                     case KeyEvent.KEYCODE_ENTER:
-                        onTagDialog.onTag(editText.getText().toString());
+                        presenterMain.setTagDialogSearch(editText.getText().toString());
                         getDialog().dismiss();
                         return true;
                 }
