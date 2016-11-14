@@ -72,9 +72,30 @@ public class DbHandler extends SQLiteOpenHelper {
         return urlsList;
     }
 
+    public List<String> getUrlsAll() {
+        List<String> urlsList = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT " + KEY_URL + " FROM " + TABLE_URLS + " ORDER BY " + KEY_TAG, null);
+
+        while (cursor.moveToNext()) {
+            urlsList.add(cursor.getString(0));
+        }
+        cursor.close();
+        if (iPresenter != null)
+            iPresenter.setUrlFavorite(urlsList);
+        return urlsList;
+    }
+
     public void deleteUrlFavorite(String url) {
         SQLiteDatabase db = getReadableDatabase();
         db.delete(TABLE_URLS, "url = '" + url + "'", null);
+
+        ApplicationBase.obs.getObserverChange().setUrl("delete");
+    }
+
+    public void deleteUrlFavoriteAll() {
+        SQLiteDatabase db = getReadableDatabase();
+        db.delete(TABLE_URLS, null, null);
 
         ApplicationBase.obs.getObserverChange().setUrl("delete");
     }
