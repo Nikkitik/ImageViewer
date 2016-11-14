@@ -61,7 +61,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
         new DownLoadImage(holder.imgView).executeOnExecutor(DownLoadImage.THREAD_POOL_EXECUTOR, sourceList.get(position));
 
         if (iPresenter != null) {
-            if (!iPresenter.getFragmentName().equals("favorite")) {
+            if (iPresenter.getFragmentName().equals("main")) {
                 if (position >= getItemCount() - 1) {
                     iPresenter.loadData();
                 }
