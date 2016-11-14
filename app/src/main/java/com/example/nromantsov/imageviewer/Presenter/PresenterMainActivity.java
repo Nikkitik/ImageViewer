@@ -36,9 +36,21 @@ public class PresenterMainActivity implements IPresenterMainActivity {
     }
 
     @Override
+    public void deleteAllFileFromDataBase() {
+        DbHandler dbHandler = new DbHandler(mainActivity);
+        dbHandler.deleteUrlFavoriteAll();
+        Toast.makeText(mainActivity, "Delete Base All", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void createDialogSearch() {
         DialogFragmentSearch dialogFragmentSearch = new DialogFragmentSearch(this);
         dialogFragmentSearch.show(mainActivity.getSupportFragmentManager(), "search");
+    }
+
+    @Override
+    public void createFavoriteAll() {
+        mainActivity.loadFragmentFavorite();
     }
 
     @Override
