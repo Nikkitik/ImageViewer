@@ -8,11 +8,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -39,9 +37,6 @@ public class FragmentAbout extends Fragment implements IViewAbout {
 
         aboutPresenter = new AboutPresenter(this);
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Подробно");
-        ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
-
         Bundle bundle = getArguments();
         if (bundle != null) {
             aboutPresenter.setUrlTag(bundle.getString("url"), bundle.getString("tag"));
@@ -61,13 +56,9 @@ public class FragmentAbout extends Fragment implements IViewAbout {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.findItem(R.id.action_delete).setVisible(false);
         menu.findItem(R.id.action_search).setVisible(false);
-    }
 
-    @Override
-    public void onDestroy() {
-        ((MainActivity) getActivity()).setDrawerIndicatorEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Мои картинки");
-        super.onDestroy();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Подробно");
+        ((MainActivity) getActivity()).setDrawerIndicatorEnabled(false);
     }
 
     @Override
