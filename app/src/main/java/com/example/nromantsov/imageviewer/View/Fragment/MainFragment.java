@@ -99,6 +99,8 @@ public class MainFragment extends Fragment implements IViewMain, Observer {
         ItemClickSupport.addTo(recyclerView).setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
             @Override
             public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+                if (name.equals("favoriteAll"))
+                    presenter.getTagFavorite(position);
                 presenter.setUrlAbout(sourceList.get(position));
             }
         });
