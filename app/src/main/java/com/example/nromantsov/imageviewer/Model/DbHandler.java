@@ -74,15 +74,20 @@ public class DbHandler extends SQLiteOpenHelper {
 
     public List<String> getUrlsAll() {
         List<String> urlsList = new ArrayList<>();
+        List<String> tagsLis = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT " + KEY_URL + " FROM " + TABLE_URLS + " ORDER BY " + KEY_TAG, null);
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_URLS + " ORDER BY " + KEY_TAG, null);
 
         while (cursor.moveToNext()) {
-            urlsList.add(cursor.getString(0));
+            tagsLis.add(cursor.getString(0));
+            urlsList.add(cursor.getString(1));
         }
+
         cursor.close();
-        if (iPresenter != null)
+        if (iPresenter != null) {
             iPresenter.setUrlFavorite(urlsList);
+            iPresenter.setTagFavorite(tagsLis);
+        }
         return urlsList;
     }
 
