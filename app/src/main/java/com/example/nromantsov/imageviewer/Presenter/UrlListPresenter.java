@@ -7,10 +7,12 @@ import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
 import com.example.nromantsov.imageviewer.View.ApplicationBase;
 import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UrlListPresenter implements IPresenterMain {
     private IViewMain iViewMain;
+    private List<String> tagsList = new ArrayList<>();
 
     private String tag;
     private String name;
@@ -56,6 +58,13 @@ public class UrlListPresenter implements IPresenterMain {
     }
 
     @Override
+    public void setTagFavorite(List<String> tags) {
+        tagsList = tags;
+    }
+
+
+
+    @Override
     public void setFragmentName(String name) {
         this.name = name;
     }
@@ -74,6 +83,12 @@ public class UrlListPresenter implements IPresenterMain {
     }
 
     public String getTag() {
+        return tag;
+    }
+
+    @Override
+    public String getTagFavorite(int position) {
+        tag = tagsList.get(position);
         return tag;
     }
 
