@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.View.Fragment;
+package com.example.nromantsov.imageviewer.view.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

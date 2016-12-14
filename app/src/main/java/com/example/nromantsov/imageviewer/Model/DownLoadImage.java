@@ -1,11 +1,11 @@
-package com.example.nromantsov.imageviewer.Model;
+package com.example.nromantsov.imageviewer.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterAbout;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterAbout;
 
 import java.io.File;
 import java.io.FileInputStream;

@@ -1,11 +1,11 @@
-package com.example.nromantsov.imageviewer.Presenter;
+package com.example.nromantsov.imageviewer.presenter;
 
-import com.example.nromantsov.imageviewer.Model.DbHandler;
-import com.example.nromantsov.imageviewer.Model.Interface.IModel;
-import com.example.nromantsov.imageviewer.Model.ParserJSON;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
-import com.example.nromantsov.imageviewer.View.ApplicationBase;
-import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
+import com.example.nromantsov.imageviewer.model.DbHandler;
+import com.example.nromantsov.imageviewer.model.interfaces.IModel;
+import com.example.nromantsov.imageviewer.model.ParserJSON;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterMain;
+import com.example.nromantsov.imageviewer.view.ApplicationBase;
+import com.example.nromantsov.imageviewer.view.interfaces.IViewMain;
 
 import java.util.ArrayList;
 import java.util.List;

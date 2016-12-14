@@ -1,11 +1,11 @@
-package com.example.nromantsov.imageviewer.Presenter;
+package com.example.nromantsov.imageviewer.presenter;
 
 import android.widget.Toast;
 
-import com.example.nromantsov.imageviewer.Model.DbHandler;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMainActivity;
-import com.example.nromantsov.imageviewer.View.Fragment.DialogFragmentSearch;
-import com.example.nromantsov.imageviewer.View.MainActivity;
+import com.example.nromantsov.imageviewer.model.DbHandler;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterMainActivity;
+import com.example.nromantsov.imageviewer.view.fragment.DialogFragmentSearch;
+import com.example.nromantsov.imageviewer.view.MainActivity;
 
 import java.io.File;
 

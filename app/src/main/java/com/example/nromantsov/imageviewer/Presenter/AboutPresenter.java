@@ -1,13 +1,13 @@
-package com.example.nromantsov.imageviewer.Presenter;
+package com.example.nromantsov.imageviewer.presenter;
 
 import android.graphics.Bitmap;
 import android.view.View;
 
-import com.example.nromantsov.imageviewer.Model.DbHandler;
-import com.example.nromantsov.imageviewer.Model.DownLoadImage;
-import com.example.nromantsov.imageviewer.Model.UrlBase;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterAbout;
-import com.example.nromantsov.imageviewer.View.Interface.IViewAbout;
+import com.example.nromantsov.imageviewer.model.DbHandler;
+import com.example.nromantsov.imageviewer.model.DownLoadImage;
+import com.example.nromantsov.imageviewer.model.UrlBase;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterAbout;
+import com.example.nromantsov.imageviewer.view.interfaces.IViewAbout;
 
 import java.util.List;
 

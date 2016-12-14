@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.Model;
+package com.example.nromantsov.imageviewer.model;
 
 public class UrlBase {
     private String tag, url;

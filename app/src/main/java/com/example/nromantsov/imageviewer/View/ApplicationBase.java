@@ -1,9 +1,9 @@
-package com.example.nromantsov.imageviewer.View;
+package com.example.nromantsov.imageviewer.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.example.nromantsov.imageviewer.Model.ObserverChange;
+import com.example.nromantsov.imageviewer.model.ObserverChange;
 import com.facebook.stetho.Stetho;
 
 public class ApplicationBase extends android.app.Application {

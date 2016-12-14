@@ -1,6 +1,5 @@
-package com.example.nromantsov.imageviewer.View.Fragment;
+package com.example.nromantsov.imageviewer.view.fragment;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,22 +9,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.nromantsov.imageviewer.Presenter.UrlListPresenter;
+import com.example.nromantsov.imageviewer.presenter.UrlListPresenter;
 import com.example.nromantsov.imageviewer.R;
-import com.example.nromantsov.imageviewer.View.Adapter.ItemClickSupport;
-import com.example.nromantsov.imageviewer.View.Adapter.RecyclerAdapter;
-import com.example.nromantsov.imageviewer.View.ApplicationBase;
-import com.example.nromantsov.imageviewer.View.Interface.IViewMain;
-import com.example.nromantsov.imageviewer.View.MainActivity;
+import com.example.nromantsov.imageviewer.view.adapter.ItemClickSupport;
+import com.example.nromantsov.imageviewer.view.adapter.RecyclerAdapter;
+import com.example.nromantsov.imageviewer.view.ApplicationBase;
+import com.example.nromantsov.imageviewer.view.interfaces.IViewMain;
+import com.example.nromantsov.imageviewer.view.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;

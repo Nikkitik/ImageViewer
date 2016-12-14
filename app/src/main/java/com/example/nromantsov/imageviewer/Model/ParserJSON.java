@@ -1,8 +1,8 @@
-package com.example.nromantsov.imageviewer.Model;
+package com.example.nromantsov.imageviewer.model;
 
 import android.os.AsyncTask;
-import com.example.nromantsov.imageviewer.Model.Interface.IModel;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
+import com.example.nromantsov.imageviewer.model.interfaces.IModel;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterMain;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.View.Adapter;
+package com.example.nromantsov.imageviewer.view.adapter;
 
 import android.content.res.Configuration;
 import android.support.v7.widget.RecyclerView;
@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.nromantsov.imageviewer.Model.DownLoadImage;
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
+import com.example.nromantsov.imageviewer.model.DownLoadImage;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterMain;
 import com.example.nromantsov.imageviewer.R;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.View;
+package com.example.nromantsov.imageviewer.view;
 
 //https://github.com/KKorvin/TinyStockQuotes
 
@@ -19,19 +19,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.nromantsov.imageviewer.Presenter.PresenterMainActivity;
+import com.example.nromantsov.imageviewer.presenter.PresenterMainActivity;
 import com.example.nromantsov.imageviewer.R;
-import com.example.nromantsov.imageviewer.View.Fragment.FragmentPagerAdapter;
-import com.example.nromantsov.imageviewer.View.Fragment.MainFragment;
-import com.example.nromantsov.imageviewer.View.Interface.IViewMainActivity;
+import com.example.nromantsov.imageviewer.view.fragment.FragmentPagerAdapter;
+import com.example.nromantsov.imageviewer.view.fragment.MainFragment;
+import com.example.nromantsov.imageviewer.view.interfaces.IViewMainActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IViewMainActivity {
-    FragmentManager fragmentManager;
-    ViewPager viewPager;
-    ActionBarDrawerToggle toggle;
-    PresenterMainActivity presenterMainActivity;
+    private FragmentManager fragmentManager;
+    private ViewPager viewPager;
+    private ActionBarDrawerToggle toggle;
+    private PresenterMainActivity presenterMainActivity;
 
-    String tag;
+    private String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

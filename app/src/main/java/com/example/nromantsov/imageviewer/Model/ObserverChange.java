@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.Model;
+package com.example.nromantsov.imageviewer.model;
 
 import java.util.Observable;
 

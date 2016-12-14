@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.View.Fragment;
+package com.example.nromantsov.imageviewer.view.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMainActivity;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterMainActivity;
 import com.example.nromantsov.imageviewer.R;
 
 public class DialogFragmentSearch extends android.support.v4.app.DialogFragment {

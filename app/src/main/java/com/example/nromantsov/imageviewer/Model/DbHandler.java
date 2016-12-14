@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.Model;
+package com.example.nromantsov.imageviewer.model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,8 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.nromantsov.imageviewer.Presenter.Interface.IPresenterMain;
-import com.example.nromantsov.imageviewer.View.ApplicationBase;
+import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterMain;
+import com.example.nromantsov.imageviewer.view.ApplicationBase;
 
 import java.util.ArrayList;
 import java.util.List;

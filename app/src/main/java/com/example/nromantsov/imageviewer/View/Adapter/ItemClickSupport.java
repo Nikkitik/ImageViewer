@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.View.Adapter;
+package com.example.nromantsov.imageviewer.view.adapter;
 
 
 import android.support.v7.widget.RecyclerView;

@@ -1,4 +1,4 @@
-package com.example.nromantsov.imageviewer.View.Fragment;
+package com.example.nromantsov.imageviewer.view.fragment;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,9 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.nromantsov.imageviewer.Presenter.AboutPresenter;
-import com.example.nromantsov.imageviewer.View.Interface.IViewAbout;
-import com.example.nromantsov.imageviewer.View.MainActivity;
+import com.example.nromantsov.imageviewer.presenter.AboutPresenter;
+import com.example.nromantsov.imageviewer.view.interfaces.IViewAbout;
+import com.example.nromantsov.imageviewer.view.MainActivity;
 import com.example.nromantsov.imageviewer.R;
 
 public class FragmentAbout extends Fragment implements IViewAbout {
