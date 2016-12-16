@@ -3,13 +3,16 @@ package com.example.nromantsov.imageviewer.model;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
 import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterAbout;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
@@ -54,40 +57,21 @@ public class DownLoadImage extends AsyncTask<String, Void, Bitmap> {
 
     @Override
     protected Bitmap doInBackground(String... urls) {
-        Bitmap image = null;
         url = urls[0];
-        int s = url.hashCode();
 
-        try {
-            File pictureDirectory = new File("data/data/com.example.nromantsov.imageviewer/");
-            File file = new File(pictureDirectory, String.valueOf(s));
-
-            if (file.exists()) {
-                InputStream inputStream = new FileInputStream(file);
-                image = BitmapFactory.decodeStream(inputStream);
-            } else {
-                InputStream in = new URL(url).openStream();
-                image = BitmapFactory.decodeStream(in);
-
-                OutputStream out = new FileOutputStream(file);
-                image.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                out.flush();
-                out.close();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return image;
+        return ImageUtils.imageDownLoad(url);
     }
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        if (iPresenterAbout != null) {
-            iPresenterAbout.setBitmap(bitmap);
-        } else {
-            if (imageView.getTag() != null && imageView.getTag().equals(url))
-                imageView.setImageBitmap(bitmap);
+        if (!isCancelled()) {
+            if (iPresenterAbout != null) {
+                iPresenterAbout.setBitmap(bitmap);
+            } else {
+                if (imageView.getTag() != null && imageView.getTag().equals(url))
+                    imageView.setImageBitmap(bitmap);
+            }
         }
     }
 }
