@@ -3,11 +3,13 @@ package com.example.nromantsov.imageviewer.view.fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,17 +24,17 @@ import com.example.nromantsov.imageviewer.R;
 
 public class FragmentAbout extends Fragment implements IViewAbout {
     private final static String CANCEL_TEXT = "Отмена";
-    AboutPresenter aboutPresenter;
-    FloatingActionButton fab;
-    ImageView imageView;
-    Snackbar snackbar;
+    private AboutPresenter aboutPresenter;
+    private FloatingActionButton fab;
+    private ImageView imageView;
+    private Snackbar snackbar;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_about, container, false);
-        fab = (FloatingActionButton) v.findViewById(R.id.fab);
-        imageView = (ImageView) v.findViewById(R.id.imgAbout);
+        fab = v.findViewById(R.id.fab);
+        imageView = v.findViewById(R.id.imgAbout);
         setHasOptionsMenu(true);
 
         aboutPresenter = new AboutPresenter(this);
@@ -53,7 +55,7 @@ public class FragmentAbout extends Fragment implements IViewAbout {
         return v;
     }
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         menu.findItem(R.id.action_delete).setVisible(false);
         menu.findItem(R.id.action_search).setVisible(false);
 

@@ -1,7 +1,9 @@
 package com.example.nromantsov.imageviewer.view.adapter;
 
 import android.content.res.Configuration;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +27,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
 
         ImageHolder(View itemView) {
             super(itemView);
-            imgView = (ImageView) itemView.findViewById(R.id.imgView);
+            imgView = itemView.findViewById(R.id.imgView);
         }
     }
 
@@ -36,8 +38,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
         this.iPresenter = iPresenter;
     }
 
+    @NonNull
     @Override
-    public ImageHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ImageHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.list_item, parent, false);
 
@@ -54,7 +57,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ImageH
 
 
     @Override
-    public void onBindViewHolder(ImageHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ImageHolder holder, int position) {
         if (holder.imgView.getTag() != null && !holder.imgView.getTag().equals(sourceList.get(position)))
             holder.imgView.setImageBitmap(null);
         holder.imgView.setTag(sourceList.get(position));

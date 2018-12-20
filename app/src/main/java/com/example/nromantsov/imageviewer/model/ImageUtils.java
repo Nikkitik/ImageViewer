@@ -2,7 +2,7 @@ package com.example.nromantsov.imageviewer.model;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,10 +17,10 @@ import java.net.URL;
  * Created by n.romantsov on 15.12.2016.
  */
 
-public class ImageUtils {
+class ImageUtils {
     private static final String PATH_FILE = "data/data/com.example.nromantsov.imageviewer/";
 
-    public static Bitmap imageDownLoad(String url) {
+    static Bitmap imageDownLoad(String url) {
         Bitmap image = null;
 
         try {

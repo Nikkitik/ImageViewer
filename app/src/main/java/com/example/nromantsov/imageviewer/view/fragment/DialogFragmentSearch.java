@@ -2,8 +2,8 @@ package com.example.nromantsov.imageviewer.view.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +17,11 @@ import android.widget.TextView;
 import com.example.nromantsov.imageviewer.presenter.interfaces.IPresenterMainActivity;
 import com.example.nromantsov.imageviewer.R;
 
-public class DialogFragmentSearch extends android.support.v4.app.DialogFragment {
+import androidx.fragment.app.DialogFragment;
 
-    IPresenterMainActivity presenterMain;
+public class DialogFragmentSearch extends DialogFragment {
+
+    private IPresenterMainActivity presenterMain;
 
     public DialogFragmentSearch(IPresenterMainActivity presenterMain) {
         this.presenterMain = presenterMain;
@@ -44,10 +46,10 @@ public class DialogFragmentSearch extends android.support.v4.app.DialogFragment 
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.dialog_layout, null);
 
-        final EditText editText = (EditText) v.findViewById(R.id.edSearch);
+        final EditText editText = v.findViewById(R.id.edSearch);
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {

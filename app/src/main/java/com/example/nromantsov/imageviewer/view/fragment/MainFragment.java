@@ -2,12 +2,12 @@ package com.example.nromantsov.imageviewer.view.fragment;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,13 +30,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 public class MainFragment extends Fragment implements IViewMain, Observer {
-    List<String> sourceList = new ArrayList<>();
-    RecyclerAdapter adapter = null;
-    ProgressBar progressBar;
-    RecyclerView recyclerView;
-    UrlListPresenter presenter;
+    private List<String> sourceList = new ArrayList<>();
+    private RecyclerAdapter adapter = null;
+    private ProgressBar progressBar;
+    private RecyclerView recyclerView;
+    private UrlListPresenter presenter;
 
-    int screenWidth, screenHeight;
+    private int screenWidth, screenHeight;
     String tag, name;
 
     @Override
@@ -108,9 +108,7 @@ public class MainFragment extends Fragment implements IViewMain, Observer {
     @Override
     public void loadUrl(List<String> urls) {
         if (urls != null) {
-            for (int i = 0; i < urls.size(); i++) {
-                sourceList.add(urls.get(i));
-            }
+            sourceList.addAll(urls);
 
             progressBar.post(new Runnable() {
                 @Override
